@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "college_name": "好吃点大学",
+    "badge_img": "yummy.jpg"
+  },
+  {
+    "id": 2,
+    "college_name": "牛奶口味大学",
+    "badge_img": "milk.jpg"
+  },
+  {
+    "id": 3,
+    "college_name": "基础大学",
+    "badge_img": "foundation.jpg"
+  },
+  {
+    "id": 4,
+    "college_name": "周末大学",
+    "badge_img": "weekend.jpg"
+  },
+  {
+    "id": 5,
+    "college_name": "算法大学",
+    "badge_img": "algorithm.jpg"
+  },
+  {
+    "id": 6,
+    "college_name": "彩虹大学",
+    "badge_img": "rainbow.jpg"
+  },
+  {
+    "id": 7,
+    "college_name": "大数据大学",
+    "badge_img": "bigdata.jpg"
+  },
+  {
+    "id": 8,
+    "college_name": "面纱大学",
+    "badge_img": "mask.jpg"
+  },
+  {
+    "id": 9,
+    "college_name": "周黑鸭大学",
+    "badge_img": "blackduck.jpg"
+  },
+  {
+    "id": 10,
+    "college_name": "河马大学",
+    "badge_img": "hippo.jpg"
+  },
+  {
+    "id": 11,
+    "college_name": "矿泉水大学",
+    "badge_img": "mineralwater.jpg"
+  },
+  {
+    "id": 12,
+    "college_name": "方便面大学",
+    "badge_img": "instantnoodles.jpg"
+  },
+  {
+    "id": 13,
+    "college_name": "小黄人大学",
+    "badge_img": "minion.jpg"
+  }
+]

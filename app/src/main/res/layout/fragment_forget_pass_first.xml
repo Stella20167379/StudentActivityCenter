@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.ForgetPassFirstFragment">
+
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_forget_pass" />
+
+    <EditText
+        android:id="@+id/verify_code"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/prompt_verification_code"
+        android:maxLength="8"
+        android:maxLines="1"
+        app:layout_constraintStart_toStartOf="@+id/editEmail"
+        app:layout_constraintTop_toBottomOf="@+id/editEmail" />
+
+    <Button
+        android:id="@+id/btn_get_verify_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_btn"
+        android:text="@string/btn_get_verify_code"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/editEmail"
+        app:layout_constraintTop_toTopOf="@+id/verify_code" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24" />
+
+    <TextView
+        android:id="@+id/title_forget_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_reset_pass"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <Button
+        android:id="@+id/btn_to_reset_pass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/selector_btn"
+        android:text="@string/txt_confirm"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/editEmail"
+        app:layout_constraintStart_toStartOf="@+id/editEmail"
+        app:layout_constraintTop_toBottomOf="@+id/new_password" />
+
+    <EditText
+        android:id="@+id/new_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:maxLines="1"
+        android:hint="@string/prompt_new_password"
+        android:inputType="textWebPassword"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="@+id/editEmail"
+        app:layout_constraintStart_toStartOf="@+id/editEmail"
+        app:layout_constraintTop_toBottomOf="@+id/verify_code" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

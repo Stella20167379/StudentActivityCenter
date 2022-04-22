@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<!--    menu里id要和navigation的id一致-->
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/txt_home" />
+
+    <item
+        android:id="@+id/navigation_message"
+        android:icon="@drawable/ic_message_black_24"
+        android:title="@string/txt_message" />
+
+    <item
+        android:id="@+id/navigation_personal"
+        android:icon="@drawable/ic_person_black_24"
+        android:title="@string/txt_personal" />
+
+</menu>

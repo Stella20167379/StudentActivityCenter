@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.personal.PersonalFragment">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/shape_gradient_background" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/portrait"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="10dp"
+            android:elevation="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/circleImageStyle"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:ellipsize="end"
+            android:maxEms="10"
+            android:text="某某咩咩咩咩咩咩咩咩某某咩咩咩咩咩咩咩咩"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/portrait"
+            app:layout_constraintTop_toTopOf="@+id/portrait" />
+
+        <TextView
+            android:id="@+id/userInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="某某学校"
+            android:layout_marginTop="@dimen/fragment_vertical_margin"
+            app:layout_constraintStart_toStartOf="@+id/userName"
+            app:layout_constraintTop_toBottomOf="@+id/userName" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="编辑"
+            android:gravity="center"
+            android:drawableEnd="@drawable/ic_more_right_black"
+            android:layout_marginEnd="@dimen/fragment_horizontal_margin"
+            app:layout_constraintBottom_toBottomOf="@+id/portrait"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/portrait" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+

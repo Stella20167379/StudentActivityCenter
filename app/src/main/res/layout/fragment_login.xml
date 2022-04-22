@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/fragment_horizontal_margin"
+    android:paddingTop="@dimen/fragment_vertical_margin"
+    android:paddingRight="@dimen/fragment_horizontal_margin"
+    android:paddingBottom="@dimen/fragment_vertical_margin"
+    tools:context=".ui.login.LoginFragment">
+
+    <ImageView
+        android:id="@+id/login_application_icon"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_application_fish_130dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="48dp"
+        android:background="@drawable/selector_btn"
+        android:enabled="false"
+        android:text="@string/txt_sign_in"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_forget_pass" />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="64dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tabLayout"
+        app:layout_constraintStart_toStartOf="@id/tabLayout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--  第三方登录分割线设计 START  -->
+
+    <View
+        android:id="@+id/divider_left"
+        android:layout_width="115dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_to_register" />
+
+    <View
+        android:id="@+id/divider_right"
+        android:layout_width="115dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="30dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/divider_left" />
+
+    <TextView
+        android:id="@+id/txt_divider"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:text="@string/title_third_account_login"
+        app:layout_constraintBottom_toBottomOf="@+id/divider_left"
+        app:layout_constraintEnd_toStartOf="@+id/divider_right"
+        app:layout_constraintStart_toEndOf="@+id/divider_left"
+        app:layout_constraintTop_toTopOf="@+id/divider_left" />
+    <!-- END -->
+
+    <TextView
+        android:id="@+id/txt_forget_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintStart_toStartOf="@id/tabLayout"
+        app:layout_constraintTop_toBottomOf="@+id/principal"
+        tools:text="@string/link_forget_password" />
+
+    <TextView
+        android:id="@+id/txt_to_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:linksClickable="true"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login"
+        tools:text="@string/link_to_register" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_application_icon">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_pass_login" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_verify_code_login" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <EditText
+        android:id="@+id/principal"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/ic_person_24"
+        android:hint="@string/prompt_account"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="@+id/tabLayout"
+        app:layout_constraintStart_toStartOf="@+id/tabLayout"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+
+    <EditText
+        android:id="@+id/credential"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/ic_lock_black_24"
+        android:hint="@string/prompt_password"
+        android:imeOptions="actionDone"
+        android:inputType="textWebPassword"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="@+id/tabLayout"
+        app:layout_constraintStart_toStartOf="@id/tabLayout"
+        app:layout_constraintTop_toBottomOf="@id/principal" />
+
+    <EditText
+        android:id="@+id/verify_code"
+        android:layout_width="220dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/ic_lock_black_24"
+        android:hint="@string/prompt_verification_code"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/tabLayout"
+        app:layout_constraintTop_toBottomOf="@id/principal" />
+
+    <Button
+        android:id="@+id/btn_get_verify_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:background="@drawable/selector_btn"
+        android:text="@string/btn_get_verify_code"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/verify_code"
+        app:layout_constraintEnd_toEndOf="@id/tabLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

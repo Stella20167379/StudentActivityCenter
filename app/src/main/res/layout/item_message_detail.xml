@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/senderImg"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:elevation="10dp"
+        android:layout_marginStart="@dimen/fragment_horizontal_margin"
+        android:layout_marginTop="@dimen/fragment_vertical_margin"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/circleImageStyle"
+        tools:src="@mipmap/ic_launcher" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/MyImg"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="@dimen/fragment_horizontal_margin"
+        android:elevation="10dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/whiteMsg"
+        app:shapeAppearanceOverlay="@style/circleImageStyle"
+        tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/whiteMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:padding="10dp"
+        android:background="@drawable/shape_white_msg"
+        android:textColor="@color/black"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxEms="17"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:text="对方发送过来,我接受了一些消息axLength限制TextView中显示的字符的个数。需要特别注意的是，在这里汉字、数字、英文字母、标点符号等，都理解为一个字符。maxLength属性会使ellipsize=”end”属性失效。也就是说添加了maxLength属性后就不会再"
+        app:layout_constraintStart_toEndOf="@+id/senderImg"
+        app:layout_constraintTop_toTopOf="@+id/senderImg" />
+
+    <TextView
+        android:id="@+id/greenMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:background="@drawable/shape_green_msg"
+        android:gravity="center"
+        android:maxEms="17"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:text="我这边发送了一些消息"
+        app:layout_constraintEnd_toStartOf="@+id/MyImg"
+        app:layout_constraintTop_toTopOf="@+id/MyImg" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

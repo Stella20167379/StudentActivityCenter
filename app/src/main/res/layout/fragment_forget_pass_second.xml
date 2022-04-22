@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.ForgetPassSecondFragment"
+    >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24"/>
+
+    <TextView
+        android:id="@+id/title_forget_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_reset_pass"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <EditText
+        android:id="@+id/old_password"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:hint="@string/prompt_old_password"
+        android:gravity="center"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_forget_pass" />
+
+    <EditText
+        android:id="@+id/new_password"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/prompt_new_password"
+        android:gravity="center"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/old_password"
+        app:layout_constraintStart_toStartOf="@+id/old_password"
+        app:layout_constraintTop_toBottomOf="@+id/old_password" />
+
+    <EditText
+        android:id="@+id/confirm_password"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/prompt_confirm_password"
+        android:gravity="center"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/old_password"
+        app:layout_constraintStart_toStartOf="@+id/old_password"
+        app:layout_constraintTop_toBottomOf="@+id/new_password" />
+
+    <Button
+        android:id="@+id/btn_to_reset_pass"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_btn"
+        android:text="@string/txt_confirm"
+        android:enabled="false"
+        android:textColor="@color/white"
+        android:layout_marginTop="70dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirm_password" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

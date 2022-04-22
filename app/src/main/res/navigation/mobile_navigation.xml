@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_firstPageFragment">
+
+<!--  进入应用的首个加载页  -->
+    <fragment
+        android:id="@+id/navigation_firstPageFragment"
+        android:name="com.example.graduatedesign.ui.FirstPageFragment"
+        android:label="fragment_first_page"
+        tools:layout="@layout/fragment_first_page">
+        <!--  popUpTo设置弹出navigation_firstPageFragment之上的所有页面
+              即由navigation_firstPageFragment起，到达当前页面/目的地期间访问的所有页面
+              popUpToInclusive设置也包括弹出navigation_firstPageFragment（展示页）
+              故以下设置的作用是由展示页重定向至首页后，将展示页弹出回退栈，实现首页按返回键时能退出应用，而不是回到展示页然后重定向回来
+         -->
+        <action
+            android:id="@+id/action_firstPageFragment_to_homeFragment"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_firstPageFragment_to_loginFragment"
+            app:destination="@id/navigation_login"/>
+    </fragment>
+
+<!--  登录页面  -->
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.example.graduatedesign.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFirstFragment"
+            app:destination="@id/navigation_registerFirst" />
+        <action
+            android:id="@+id/action_navigation_login_to_forgetPassFirstFragment"
+            app:destination="@id/forgetPassFirstFragment" />
+        <action
+            android:id="@+id/action_navigation_login_to_navigation_home"
+            app:popUpTo="@id/navigation_login"
+            app:popUpToInclusive="true"
+            app:destination="@id/navigation_home" />
+    </fragment>
+<!--  注册的第一个页面  -->
+    <fragment
+        android:id="@+id/navigation_registerFirst"
+        android:name="com.example.graduatedesign.ui.login.RegisterFirstFragment"
+        android:label="RegisterFirstFragment"
+        tools:layout="@layout/fragment_register_first">
+        <action
+            android:id="@+id/action_registerFirstFragment_to_registerSecondFragment"
+            app:destination="@id/navigation_registerSecond"
+            app:popUpTo="@id/navigation_registerFirst"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+<!--  注册的第二个页面  -->
+    <fragment
+        android:id="@+id/navigation_registerSecond"
+        android:name="com.example.graduatedesign.ui.login.RegisterSecondFragment"
+        android:label="RegisterSecondFragment"
+        tools:layout="@layout/fragment_register_second"
+        >
+    </fragment>
+<!--  重置密码的第一种方法，获取手机验证码  -->
+    <fragment
+        android:id="@+id/forgetPassFirstFragment"
+        android:name="com.example.graduatedesign.ui.login.ForgetPassFirstFragment"
+        android:label="fragment_forget_pass_first"
+        tools:layout="@layout/fragment_forget_pass_first" >
+    </fragment>
+<!--  重置密码的第二种方法，输入新旧密码  -->
+    <fragment
+        android:id="@+id/forgetPassSecondFragment"
+        android:name="com.example.graduatedesign.ui.login.ForgetPassSecondFragment"
+        android:label="fragment_forget_pass_second"
+        tools:layout="@layout/fragment_forget_pass_second" />
+
+<!--  showAppBottomNav 参数若设置为true，则显示应用最外层的底部导航栏  -->
+    <!--  登录成功后，最外层导航的首页  -->
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.graduatedesign.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <argument
+            android:name="showAppBottomNav"
+            android:defaultValue="true" />
+    </fragment>
+
+    <!--  登录成功后，最外层导航的消息页面  -->
+    <fragment
+        android:id="@+id/navigation_message"
+        android:name="com.example.graduatedesign.ui.message.MessageFragment"
+        android:label="fragment_message"
+        tools:layout="@layout/fragment_message">
+        <argument
+            android:name="showAppBottomNav"
+            android:defaultValue="true" />
+        <action
+            android:id="@+id/action_messageFragment_to_messageDetailFragment"
+            app:destination="@id/navigation_messageDetail" />
+    </fragment>
+    <!--  消息详情页面  -->
+    <fragment
+        android:id="@+id/navigation_messageDetail"
+        android:name="com.example.graduatedesign.ui.message.MessageDetailFragment"
+        android:label="fragment_message_detail"
+        tools:layout="@layout/fragment_message_detail">
+    </fragment>
+
+    <!--  登录成功后，最外层导航的个人信息页面  -->
+    <fragment
+        android:id="@+id/navigation_personal"
+        android:name="com.example.graduatedesign.ui.personal.PersonalFragment"
+        android:label="PersonalFragment" >
+        <argument
+            android:name="showAppBottomNav"
+            android:defaultValue="true" />
+    </fragment>
+
+</navigation>

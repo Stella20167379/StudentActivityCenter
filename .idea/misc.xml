@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable-v24/ic_arrow_back_black_24.xml" value="0.1515" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1595" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable-v24/ic_lock_black_24.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable-v24/ic_message_black_24.xml" value="0.1595" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable-v24/ic_person_black_24.xml" value="0.155" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable-v24/ic_phone_purple_24.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic__arrow_back_black_24.xml" value="0.137" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic__lock_black_24.xml" value="0.137" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_application_fish_130dp.xml" value="0.137" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_arrow_back_black_24.xml" value="0.1515" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_arrow_back_black_48.xml" value="0.118" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_arrow_back_white_24.xml" value="0.182" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_baseline_message_24.xml" value="0.1595" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1595" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_delete_gray_24.xml" value="0.1355" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_dialog_point_right.xml" value="0.117" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_email_24.xml" value="0.135" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_favorite_black_48dp.xml" value="0.136" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.1595" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1595" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_mark_my_activity.xml" value="0.137" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_more_horiz_black_24.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_more_right_black.xml" value="0.143" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1595" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_person_24.xml" value="0.155" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_person_black_24.xml" value="0.1595" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_phone_purple_24.xml" value="0.14" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_qr_code_black_24.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_qr_code_scanner_24.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_search_48.xml" value="0.136" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_search_black_24.xml" value="0.1355" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/ic_search_white_24.xml" value="0.207" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/selector_btn.xml" value="0.136" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/selector_btn_txt.xml" value="0.1555" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/shape_btn_gray_background.xml" value="0.1205" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/shape_btn_purple_background.xml" value="0.1455" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/shape_gradient_background.xml" value="0.2" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/shape_gray_rectangle.xml" value="0.1355" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/shape_green_msg.xml" value="0.1435" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/shape_left_msg.xml" value="0.17" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/shape_msg_framework.xml" value="0.1495" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/shape_rec_background_shadow.xml" value="0.16" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/shape_rec_txt_background.xml" value="0.1355" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/shape_right_msg.xml" value="0.17" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/drawable/shape_white_msg.xml" value="0.1435" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/activity_main.xml" value="0.3740234375" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/faragment_message_detail.xml" value="0.35177865612648224" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_activity_comment.xml" value="0.4466666666666667" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_activity_detail.xml" value="0.3333333333333333" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_activity_detail_holder.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_activity_search.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_association_detail.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_association_details.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_dashboard.xml" value="0.1403985507246377" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_first_page.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_forget_pass_first.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_forget_pass_second.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_forget_password.xml" value="0.19947916666666668" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_message.xml" value="0.36650717703349284" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_message_detail.xml" value="0.4466666666666667" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_notifications.xml" value="0.19947916666666668" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_personal.xml" value="0.4444444444444444" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_register.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_register_first.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_register_second.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_register_second01.xml" value="0.16374519025224454" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_reset_password.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_search_activity.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/fragment_search_activity_or.xml" value="0.16374519025224454" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/item__recycler_activity.xml" value="0.3333333333333333" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/item_activity_show.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/item_activity_simple.xml" value="0.22" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/item_association_show.xml" value="0.4466666666666667" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/item_college_spinner.xml" value="0.16374519025224454" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/item_message_detail.xml" value="0.3333333333333333" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/item_message_show.xml" value="0.4466666666666667" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/item_test_recycler.xml" value="0.16374519025224454" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/layout/reuse_weather_card.xml" value="0.16374519025224454" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3333333333333333" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/menu/top_back_menu.xml" value="0.16374519025224454" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/menu/top_home_menu.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/menu/top_toolbar_menu.xml" value="0.1" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.15" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.15" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/uitestapplication/src/main/res/drawable-v24/ic_arrow_back_black_24.xml" value="0.1465" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/uitestapplication/src/main/res/drawable-v24/ic_arrow_back_white_24.xml" value="0.1465" />
+        <entry key="..\:/AndroidProjects/GraduateDesign/app/uitestapplication/src/main/res/layout/activity_main.xml" value="0.3333333333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_15_PREVIEW" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,0 +1,81 @@
+<resources>
+    <string name="app_name">MyApp</string>
+    <string name="hello_blank_fragment">hello_blank_fragment</string>
+
+    <!--  简单翻译的可多处使用的词  -->
+    <string name="txt_confirm">确定</string>
+    <string name="txt_cancel">取消</string>
+    <string name="txt_back">返回</string>
+    <string name="txt_continue">继续</string>
+    <string name="txt_school">学校</string>
+    <string name="txt_sign_in">登录</string>
+    <string name="txt_register">注册</string>
+    <string name="txt_search">搜索</string>
+    <string name="txt_more">更多</string>
+    <string name="txt_nickname">昵称</string>
+    <string name="txt_home">首页</string>
+    <string name="txt_message">消息</string>
+    <string name="txt_personal">我的</string>
+    <string name="txt_introduction">介绍</string>
+    <string name="txt_bulletin">公告</string>
+    <string name="txt_submit">提交</string>
+
+
+    <!--  提示语句  -->
+    <string name="prompt_account">请输入账号昵称/邮箱</string>
+    <string name="prompt_nickname">请输入账号昵称</string>
+    <string name="prompt_email">请输入邮箱</string>
+    <string name="prompt_password">请输入密码</string>
+    <string name="prompt_student_no">请输入学号</string>
+    <string name="prompt_verification_code">请输入验证码</string>
+    <string name="prompt_old_password">请输入旧密码</string>
+    <string name="prompt_new_password">请输入新密码</string>
+    <string name="prompt_confirm_password">请再次输入新密码</string>
+    <string name="prompt_search_key">请输入活动/社团名称</string>
+    <string name="prompt_reset_pass_success">密码修改成功</string>
+    <string name="prompt_login_for_reset_pass">密码已重置，请重新登录</string>
+    <string name="prompt_comment_input">请输入评论</string>
+
+
+    <!--  标识语句/标题  -->
+    <string name="title_first_page">这是第一页，加载中请稍候</string>
+    <string name="title_reset_pass">重置密码</string>
+    <string name="title_loading">加载中</string>
+    <string name="title_none_data">暂无更多</string>
+    <string name="title_pass_login">密码登录</string>
+    <string name="title_verify_code_login">验证码登录</string>
+    <string name="title_third_account_login">第三方登录</string>
+    <string name="title_association_name">社团名称</string>
+    <string name="title_signTime">报名时间</string>
+    <string name="title_activityTime">活动时间</string>
+    <string name="title_activity_location">活动地点</string>
+    <string name="title_sum_limit">人数</string>
+    <string name="title_activity_acquirement">活动要求</string>
+    <string name="title_activity_detail">活动详情</string>
+    <string name="title_activity_comment">活动评论</string>
+    <string name="title_activity_score">活动评分</string>
+    <string name="title_submit_comment_score">我要评分</string>
+
+
+    <!--  错误提示  -->
+    <string name="error_pass">密码长度需大于5</string>
+    <string name="error_confirm_pass">两次输入的密码不一致</string>
+    <string name="error_invalid_principle">账号不合法</string>
+    <string name="error_invalid_credential">密码长度需大于5</string>
+    <string name="error_invalid_email">请输入有效的邮箱地址</string>
+    <string name="error_invalid_verify_code">请输入6位验证码</string>
+    <string name="error_login_failed">登录失败</string>
+
+    <!-- 可点击文字/按钮文字 -->
+    <string name="btn_get_verify_code">获取验证码</string>
+    <string name="link_forget_password">忘记密码？</string>
+    <string name="link_to_register">没有账号？去注册</string>
+
+    <!--  特殊的值  -->
+    <string name="special_min_date">01/01/2022</string>
+    <string name="special_activity_state_1">未开始</string>
+    <string name="special_activity_state_2">可报名</string>
+    <string name="special_activity_state_3">进行中</string>
+    <string name="special_activity_state_4">已结束</string>
+
+</resources>
