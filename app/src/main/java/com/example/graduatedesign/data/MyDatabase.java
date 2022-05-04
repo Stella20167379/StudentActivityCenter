@@ -7,13 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.graduatedesign.data.dao.CollegeDao;
-import com.example.graduatedesign.data.dao.MessageDao;
 import com.example.graduatedesign.data.model.College;
-import com.example.graduatedesign.data.model.Message;
 import com.example.graduatedesign.utils.AssetsUtil;
 
 import java.util.List;
@@ -23,13 +20,12 @@ import java.util.concurrent.Executors;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-@Database(entities = {College.class, Message.class}, version = 1, exportSchema = false)
-@TypeConverters({DateTypeConverter.class})
+@Database(entities = {College.class}, version = 1, exportSchema = false)
+//@TypeConverters({DateTypeConverter.class})
 public abstract class MyDatabase extends RoomDatabase {
     private static final String TAG = "MyDatabase";
 
     public abstract CollegeDao getCollegeDao();
-    public abstract MessageDao getMessageDao();
 
     /* 变量声明 */
     private static volatile MyDatabase INSTANCE;

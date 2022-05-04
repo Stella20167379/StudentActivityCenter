@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.graduatedesign.R;
 import com.example.graduatedesign.data.model.Message;
+import com.example.graduatedesign.utils.DataUtil;
 import com.example.graduatedesign.utils.GlideUtils;
 
 public class MessageDetailHolder extends RecyclerView.ViewHolder {
@@ -45,7 +46,6 @@ public class MessageDetailHolder extends RecyclerView.ViewHolder {
         if (message == null)
             return;
 
-        int resourceId = R.mipmap.ic_launcher;
         ImageView imageView;
         /* 根据消息类别设置内容及可见性
         注意，由于MessageDetailViewHolder是可复用的，故会保留上一个绑定数据时的视图设置
@@ -70,9 +70,10 @@ public class MessageDetailHolder extends RecyclerView.ViewHolder {
             whiteMsg.setVisibility(View.VISIBLE);
         }
         Glide.with(itemView)
-                .load(resourceId)
+                .load(DataUtil.getImgDownloadUri(DataUtil.getImgDownloadUri(message.getSenderPortrait())))
                 .apply(GlideUtils.OPTIONS)
                 .into(imageView);
+
         imageView.setVisibility(View.VISIBLE);
     }
 }

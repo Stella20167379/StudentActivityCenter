@@ -1,8 +1,6 @@
 package com.example.graduatedesign.ui.login;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -55,8 +53,6 @@ public class ForgetPassFirstFragment extends Fragment {
 
         getVerifyCodeBtn = binding.btnGetVerifyCode;
 
-        Toolbar toolbar = binding.toolbar;
-        toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(root).popBackStack());
         return root;
     }
 
@@ -64,10 +60,13 @@ public class ForgetPassFirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Button btnNext = binding.btnToResetPass;
+        final Button btnToResetPass = binding.btnToResetPass;
         final EditText emailView = binding.editEmail;
         final EditText verifyCodeView = binding.verifyCode;
         final EditText newPassView= binding.newPassword;
+        final Toolbar toolbar = binding.toolbar;
+
+        toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(root).popBackStack());
 
         //获取验证码按钮点击事件
         getVerifyCodeBtn.setOnClickListener(v -> {
@@ -82,7 +81,7 @@ public class ForgetPassFirstFragment extends Fragment {
         });
 
         //确定按钮点击事件
-        btnNext.setOnClickListener(v -> {
+        btnToResetPass.setOnClickListener(v -> {
             String email = emailView.getText().toString();
             String verifyCode = verifyCodeView.getText().toString();
             String newPass=newPassView.getText().toString();
@@ -136,3 +135,5 @@ public class ForgetPassFirstFragment extends Fragment {
         PromptUtil.snackbarShowTxt(root, msg);
     }
 }
+
+

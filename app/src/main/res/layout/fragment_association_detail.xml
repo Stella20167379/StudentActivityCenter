@@ -1,116 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!--   固定在顶部的返回菜单栏     -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        app:navigationIcon="@drawable/ic_arrow_back_black_24"
-        android:layout_width="wrap_content"
-        android:layout_height="?attr/actionBarSize"
-        android:elevation="4dp" />
+    <data>
 
-    <com.google.android.material.appbar.AppBarLayout
+        <import type="android.view.View" />
+
+        <variable
+            name="isAdmin"
+            type="Boolean" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:paddingStart="@dimen/fragment_horizontal_margin"
-        android:paddingEnd="@dimen/fragment_horizontal_margin"
-        >
+        android:layout_height="match_parent">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/portrait"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:elevation="10dp"
-            tools:src="@mipmap/ic_launcher"
-            android:layout_gravity="center_horizontal"
-            app:shapeAppearanceOverlay="@style/circleImageStyle" />
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="某某社团"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/fragment_vertical_margin" />
-
-        <View
-            android:id="@+id/divider01"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="@dimen/fragment_vertical_margin"
-            android:background="?android:attr/listDivider" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/introductionTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="社团介绍"
-            android:textColor="@color/black"
-            android:textSize="16sp"/>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/ic_arrow_back_black_24">
 
-        <TextView
-            android:id="@+id/introduction_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fragment_vertical_margin"
-            android:text="这是社团的介绍。。。"
-            android:maxLines="3" />
+                <TextView
+                    android:id="@+id/join_btn"
+                    android:layout_width="60dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/txt_margin_medium"
+                    android:background="@drawable/shape_rec_background_shadow"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="加入"
+                    android:textColor="@color/green"
+                    android:visibility="@{isAdmin ? View.GONE : View.VISIBLE}" />
+            </androidx.appcompat.widget.Toolbar>
 
-        <View
-            android:id="@+id/divider02"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="?android:attr/listDivider"
-            android:layout_marginTop="@dimen/fragment_vertical_margin" />
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-        <TextView
-            android:id="@+id/bulletinTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fragment_vertical_margin"
-            android:text="社团公告"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/portrait"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginStart="@dimen/txt_margin_medium"
+                android:elevation="6dp"
+                app:layout_constraintBottom_toTopOf="@+id/divider01"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:shapeAppearanceOverlay="@style/circleImageStyle"
+                tools:src="@mipmap/ic_launcher" />
 
-        <TextView
-            android:id="@+id/bulletin_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fragment_vertical_margin"
-            android:text="这是社团的公告。。。" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/txt_margin_medium"
+                android:layout_marginTop="@dimen/txt_margin_small"
+                android:text="某某社团"
+                android:textColor="@color/gray_700"
+                app:layout_constraintStart_toEndOf="@+id/portrait"
+                app:layout_constraintTop_toTopOf="@+id/portrait" />
+
+            <View
+                android:id="@+id/divider01"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="130dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+            <TextView
+                android:id="@+id/introductionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/txt_margin_medium"
+                android:layout_marginTop="@dimen/txt_margin_medium"
+                android:text="简介"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider01" />
+
+            <TextView
+                android:id="@+id/introduction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_vertical_margin"
+                android:maxLines="3"
+                android:text="这是社团的介绍。。。"
+                app:layout_constraintStart_toStartOf="@id/introductionTitle"
+                app:layout_constraintTop_toBottomOf="@id/introductionTitle" />
+
+            <View
+                android:id="@+id/divider02"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toTopOf="@+id/bulletinTitle"
+                app:layout_constraintTop_toBottomOf="@id/introduction" />
+
+            <TextView
+                android:id="@+id/bulletinTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                android:text="社团公告"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/introductionTitle"
+                app:layout_constraintTop_toBottomOf="@id/introduction" />
+
+            <ImageView
+                android:id="@+id/more_bulletin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/txt_margin_small"
+                android:clickable="true"
+                android:padding="15dp"
+                android:src="@drawable/ic_more_right_black"
+                app:layout_constraintBottom_toBottomOf="@+id/bulletinTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/bulletinTitle" />
+
+            <TextView
+                android:id="@+id/bulletin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_vertical_margin"
+                android:text="这是社团的公告。。。"
+                app:layout_constraintStart_toStartOf="@id/introductionTitle"
+                app:layout_constraintTop_toBottomOf="@id/bulletinTitle" />
 
 
             <View
                 android:id="@+id/divider03"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toTopOf="@+id/activities_title"
+                app:layout_constraintTop_toBottomOf="@id/bulletin" />
+
+            <TextView
+                android:id="@+id/activities_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                android:text="社团活动"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/introductionTitle"
+                app:layout_constraintTop_toBottomOf="@id/bulletin" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/fragment_vertical_margin"
-                android:background="?android:attr/listDivider" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activities_title" />
 
-        <TextView
-            android:id="@+id/activitiesTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fragment_vertical_margin"
-            android:layout_gravity="center_horizontal"
-            android:text="社团活动"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            <View
+                android:id="@+id/blankPlaceHolder"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+            <TextView
+                android:id="@+id/establish_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2022/03/12"
+                app:layout_constraintBottom_toTopOf="@+id/sum"
+                app:layout_constraintStart_toStartOf="@+id/name"
+                app:layout_constraintTop_toBottomOf="@+id/name" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            <TextView
+                android:id="@+id/sum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/txt_margin_tiny"
+                android:text="99人"
+                app:layout_constraintBottom_toBottomOf="@+id/portrait"
+                app:layout_constraintStart_toStartOf="@+id/name" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

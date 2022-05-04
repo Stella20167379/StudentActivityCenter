@@ -19,7 +19,12 @@
     <string name="txt_introduction">介绍</string>
     <string name="txt_bulletin">公告</string>
     <string name="txt_submit">提交</string>
-
+    <string name="txt_activity">活动</string>
+    <string name="txt_association">社团</string>
+    <string name="txt_year">年</string>
+    <string name="txt_month">月</string>
+    <string name="txt_date">日</string>
+    <string name="txt_time_symbol">:</string>
 
     <!--  提示语句  -->
     <string name="prompt_account">请输入账号昵称/邮箱</string>
@@ -35,6 +40,7 @@
     <string name="prompt_reset_pass_success">密码修改成功</string>
     <string name="prompt_login_for_reset_pass">密码已重置，请重新登录</string>
     <string name="prompt_comment_input">请输入评论</string>
+    <string name="prompt_title_input">请输入标题</string>
 
 
     <!--  标识语句/标题  -->
@@ -72,10 +78,17 @@
     <string name="link_to_register">没有账号？去注册</string>
 
     <!--  特殊的值  -->
-    <string name="special_min_date">01/01/2022</string>
+    <string name="special_min_date">01-01-2022</string>
+    <string name="special_show_activity_datetime">2022-01-03 10:00</string>
     <string name="special_activity_state_1">未开始</string>
-    <string name="special_activity_state_2">可报名</string>
-    <string name="special_activity_state_3">进行中</string>
-    <string name="special_activity_state_4">已结束</string>
+    <string name="special_activity_state_2">报名</string>
+    <string name="special_activity_state_3">报名截止</string>
+    <string name="special_activity_state_4">签到/签退</string>
+    <string name="special_activity_state_5">签到</string>
+    <string name="special_activity_state_6">签退</string>
+    <string name="special_activity_state_7">未签退</string>
+    <string name="special_activity_state_8">已签退</string>
+    <string name="special_activity_state_9">已结束</string>
+    <string name="special_default_comment_score">5.0</string>
 
 </resources>

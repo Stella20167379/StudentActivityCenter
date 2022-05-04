@@ -7,23 +7,28 @@ import java.time.format.DateTimeFormatter;
 
 public class DateTypeConverter {
     //具有转换功能的对象
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/mm/dd");
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/mm/dd HH:mm:ss");
 
-    @TypeConverter
-    public static LocalDateTime dateFromString(String value) {
+    public static LocalDateTime dateFromString(String value,boolean withTimeOrNot) {
         if (value == null)
             return null;
-        LocalDateTime time = LocalDateTime.parse(value, dateTimeFormatter);
+        LocalDateTime time;
+        if (withTimeOrNot)
+            time = LocalDateTime.parse(value, dateTimeFormatter);
+        else time=LocalDateTime.parse(value,dateFormatter);
         return time;
     }
 
-    @TypeConverter
-    public static String dateToString(LocalDateTime date) {
-        if (date == null)
+    public static String dateToString(LocalDateTime value,boolean withTimeOrNot) {
+        if (value == null)
             return null;
-        //2.要转换的对象-LocalDateTime对象
-        //3.发动功能
-        String time = dateTimeFormatter.format(date);
+
+        String time;
+        if (withTimeOrNot)
+            time = dateTimeFormatter.format(value);
+        else time=dateFormatter.format(value);
+
         return time;
     }
 }

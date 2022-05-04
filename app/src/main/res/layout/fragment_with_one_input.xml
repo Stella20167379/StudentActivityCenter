@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24">
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            tools:text="标题栏" />
+    </androidx.appcompat.widget.Toolbar>
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:elevation="4dp"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="?android:attr/listDivider"/>
+
+    <EditText
+        android:id="@+id/input_txt"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginStart="@dimen/txt_margin_medium"
+        android:layout_marginEnd="@dimen/txt_margin_medium"
+        android:padding="6dp"
+        android:background="@drawable/shape_rec_background_shadow"
+        />
+
+    <Button
+        android:id="@+id/confirm_btn"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_btn"
+        android:textColor="@color/white"
+        android:text="@string/txt_confirm"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="300dp"
+        />
+
+</FrameLayout>

@@ -55,4 +55,8 @@ public class MessageDetailAdapter extends RecyclerView.Adapter<MessageDetailHold
         return mDiffer.getCurrentList().get(position);
     }
 
+    public List<Message> getCurrentList(){
+        return mDiffer.getCurrentList();
+    }
+
 }

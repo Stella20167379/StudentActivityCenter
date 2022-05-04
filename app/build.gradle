@@ -16,6 +16,8 @@ android {
 
         packagingOptions{
             pickFirst "META-INF/gradle/incremental.annotation.processors"
+            exclude 'META-INF/INDEX.LIST'
+            exclude 'META-INF/io.netty.versions.properties'
         }
 
         compileOptions {
@@ -45,8 +47,11 @@ android {
         }
     }
 
-    buildFeatures {
-        viewBinding true
+    viewBinding {
+        enabled = true
+    }
+    dataBinding {
+        enabled = true
     }
 }
 
@@ -132,5 +137,8 @@ dependencies {
 
     //socket通信框架
     implementation 'io.netty:netty-all:4.1.76.Final'
+
+    //二维码
+    implementation 'com.google.zxing:core:3.3.0'
 
 }

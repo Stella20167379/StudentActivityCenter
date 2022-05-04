@@ -35,8 +35,8 @@ public class ApplicationModule {
                 .baseUrl("http://10.0.2.2:3165/")
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create()) // 支持RxJava
+                .validateEagerly(true)//提前检查请求是否合法，开发时用
                 .client(OkHttpClient)
-                .validateEagerly(true)/* 开发测试时使用 */
                 .build();
     }
 
@@ -70,12 +70,6 @@ public class ApplicationModule {
         httpClientBuilder.addInterceptor(loggingInterceptor);
 
         return httpClientBuilder.build();
-    }
-
-    @Singleton
-    @Provides
-    public MyTokenInterceptor myTokenInterceptor() {
-        return new MyTokenInterceptor("1");
     }
 
 }

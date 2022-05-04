@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbars="none"
-    >
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.personal.PersonalFragment">
+    android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/shape_gradient_background" />
@@ -48,26 +40,125 @@
             app:layout_constraintTop_toTopOf="@+id/portrait" />
 
         <TextView
-            android:id="@+id/userInfo"
+            android:id="@+id/schoolView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="某某学校"
             android:layout_marginTop="@dimen/fragment_vertical_margin"
+            android:text="某某学校"
             app:layout_constraintStart_toStartOf="@+id/userName"
             app:layout_constraintTop_toBottomOf="@+id/userName" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/more_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="编辑"
-            android:gravity="center"
-            android:drawableEnd="@drawable/ic_more_right_black"
             android:layout_marginEnd="@dimen/fragment_horizontal_margin"
+            android:drawableEnd="@drawable/ic_more_right_black"
+            android:gravity="center"
+            android:text="编辑"
             app:layout_constraintBottom_toBottomOf="@+id/portrait"
             app:layout_constraintEnd_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="@+id/portrait" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+        <TextView
+            android:id="@+id/my_association_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/txt_margin_small"
+            android:text="我的社团"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/my_association_btn"
+            app:layout_constraintStart_toStartOf="@+id/my_association_btn"
+            app:layout_constraintTop_toBottomOf="@+id/my_association_btn" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="100dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <ImageButton
+            android:id="@+id/my_comment_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_500"
+            android:elevation="6dp"
+            android:padding="@dimen/txt_margin_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/my_order_btn"
+            app:layout_constraintTop_toTopOf="@+id/my_association_btn"
+            app:srcCompat="@drawable/ic_my_comment_24" />
+
+        <ImageButton
+            android:id="@+id/my_association_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/txt_margin_small_medium"
+            android:background="@color/purple_500"
+            android:elevation="6dp"
+            android:padding="@dimen/txt_margin_small"
+            app:layout_constraintEnd_toStartOf="@+id/my_order_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:srcCompat="@drawable/ic_association_car_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的评论"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/my_comment_btn"
+            app:layout_constraintStart_toStartOf="@+id/my_comment_btn"
+            app:layout_constraintTop_toTopOf="@+id/my_association_title" />
+
+        <ImageButton
+            android:id="@+id/my_order_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_500"
+            android:elevation="6dp"
+            android:padding="@dimen/txt_margin_small"
+            app:layout_constraintEnd_toStartOf="@+id/my_comment_btn"
+            app:layout_constraintStart_toEndOf="@+id/my_association_btn"
+            app:layout_constraintTop_toTopOf="@+id/my_association_btn"
+            app:srcCompat="@drawable/ic_my_order_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的支付记录"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/txt_margin_small"
+            app:layout_constraintEnd_toEndOf="@+id/my_order_btn"
+            app:layout_constraintStart_toStartOf="@+id/my_order_btn"
+            app:layout_constraintTop_toBottomOf="@+id/my_order_btn" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/txt_margin_medium"
+            app:layout_constraintTop_toBottomOf="@+id/my_activity_title" />
+
+        <TextView
+            android:id="@+id/my_activity_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/txt_margin_medium"
+            android:text="我的活动"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:layout_constraintTop_toBottomOf="@id/recyclerView"
+            />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 

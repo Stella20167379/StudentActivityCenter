@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -25,9 +26,9 @@ import androidx.navigation.Navigation;
 
 import com.example.graduatedesign.MainActivityViewModel;
 import com.example.graduatedesign.R;
-import com.example.graduatedesign.LoggedInUser;
 import com.example.graduatedesign.data.model.Result;
 import com.example.graduatedesign.databinding.FragmentLoginBinding;
+import com.example.graduatedesign.personal_module.data.User;
 import com.example.graduatedesign.utils.CountDownTimerUtil;
 import com.example.graduatedesign.utils.PromptUtil;
 import com.google.android.material.tabs.TabLayout;
@@ -92,14 +93,14 @@ public class LoginFragment extends Fragment implements TabLayout.OnTabSelectedLi
             public void onClick(@NonNull View widget) {
                 navController.navigate(R.id.action_loginFragment_to_registerFirstFragment);
             }
-        }, 0, registerSpan.length(), 18);
+        }, 0, registerSpan.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
         forgetPassSpan.setSpan(new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
                 navController.navigate(R.id.action_navigation_login_to_forgetPassFirstFragment);
             }
-        }, 0, forgetPassSpan.length(), 18);
+        }, 0, forgetPassSpan.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
         //使用ClickableSpan的文本如果想真正实现点击作用，必须为TextView设置setMovementMethod方法
         // 否则没有点击相应，至于setHighlightColor方法则是控制点击是的背景色。
@@ -109,17 +110,24 @@ public class LoginFragment extends Fragment implements TabLayout.OnTabSelectedLi
         txtToRegister.setText(registerSpan);
         txtForgetPass.setText(forgetPassSpan);
 
+        //设置登录类型监听器
+        tabLayout.addOnTabSelectedListener(this);
+
+
+
         /* ----------------- 和loginViewModel的数据双向绑定 START ------------------- */
 
         /* 数据变化 -> 显示提示消息回调，停止验证码按钮计时器*/
+
         loginViewModel.getVerifyCodeError().observe(getViewLifecycleOwner(), value -> {
             if (value == null)
                 return;
-            PromptUtil.snackbarShowTxt(root,value);
+            PromptUtil.snackbarShowTxt(root, value);
             timer.cancelTimerCount();
         });
 
         /* 观察数据状态，将ViewModel数据绑定至视图，由ViewModel调用回调处理，数据更新 -> 更新视图 */
+
         loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), loginFormState -> {
             //用户未进行输入时
             if (loginFormState == null) {
@@ -137,6 +145,7 @@ public class LoginFragment extends Fragment implements TabLayout.OnTabSelectedLi
         });
 
         /* 同上，数据更新 -> 视图更新，登录验证后的视图处理 */
+
         loginViewModel.getLoginResult().observe(getViewLifecycleOwner(), loginResult -> {
             if (loginResult == null) {
                 return;
@@ -179,6 +188,7 @@ public class LoginFragment extends Fragment implements TabLayout.OnTabSelectedLi
 
 
         /* 登录按钮点击监听，点击按钮调用ViewModel方法，实现 视图操作-> 数据更新 */
+
         loginButton.setOnClickListener(v -> {
             loadingProgressBar.setVisibility(View.VISIBLE);
             loginViewModel.login(principalEditText.getText().toString(),
@@ -186,6 +196,7 @@ public class LoginFragment extends Fragment implements TabLayout.OnTabSelectedLi
         });
 
         /* 获取验证码按钮点击事件,结果影响数据，视图操作 -> 数据更新 */
+
         getVerifyCodeBtn.setOnClickListener(v -> {
             LoginFormState formState = loginViewModel.getLoginFormState().getValue();
             if (formState == null) {
@@ -198,49 +209,67 @@ public class LoginFragment extends Fragment implements TabLayout.OnTabSelectedLi
             }
 
             //开始倒计时，总时长60 000毫秒，即60秒，间隔1秒
-            timer=new CountDownTimerUtil(getVerifyCodeBtn, 60000, 1000);
+            timer = new CountDownTimerUtil(getVerifyCodeBtn, 60000, 1000);
             timer.start();
             loginViewModel.getLoginVerifyCode(principalEditText.getText().toString());
         });
 
-        /* ----------------------------- END ------------------------------- */
 
-        //设置登录类型监听器
-        tabLayout.addOnTabSelectedListener(this);
+        /* ----------------------------- END ------------------------------- */
     }
 
-    //登录成功，跳转至首页
-    private void OnLoginSuccess(Map<String, Object> data) {
+
+    /**
+     * 登录成功的回调操作
+     * @param data 登录成功后服务器回传的数据
+     */
+    private void OnLoginSuccess(@NonNull Map<String, Object> data) {
         MainActivityViewModel viewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
+        //更新应用的viewModel，会触发activity的跳转事件
+        viewModel.getUserInfo().setValue(storeLoggedInUser(data));
+    }
 
-        assert data != null;
+    /**
+     * 将数据存入SharedPreferences
+     * @param data 登录成功后服务器回传的数据
+     * @return
+     */
+    private User storeLoggedInUser(Map<String, Object> data){
 
-        LoggedInUser user = (LoggedInUser) data.get("LoggedInUser");
-        String nickname = (String) data.get("nickname");
-        Boolean isAssociationAdmin = (Boolean) data.get("isAssociationAdmin");
-        String refreshToken = (String) data.get("refreshToken");
+        User user = (User) data.get("LoggedInUser");
+        String tokenName = (String) data.get("tokenName");
         String token = (String) data.get("token");
 
         assert user != null;
-
+        //TODO:可以考虑序列化存储
         //更新SharedPreferences
         SharedPreferences sp = this.requireActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putInt("userId", user.getUserId());
+        editor.putInt("id", user.getId());
         editor.putString("schoolName", user.getSchoolName());
+        editor.putString("nickname", user.getNickname());
         editor.putString("email", user.getEmail());
         editor.putString("portrait", user.getPortrait());
         editor.putInt("credentialInfoId", user.getCredentialInfoId());
-        editor.putString("refreshToken", refreshToken);
+        editor.putInt("schoolId", user.getSchoolId());
+        editor.putString("realName", user.getRealName());
+        editor.putBoolean("sex", user.isSex());
+        editor.putString("credentialNum", user.getCredentialNum());
+        editor.putString("role", user.getRole());
+        editor.putString("majorClass", user.getMajorClass());
+        editor.putBoolean("isAssociationAdmin", user.isAssociationAdmin());
+
+        editor.putString("tokenName", tokenName);
         editor.putString("token", token);
         editor.apply();
 
-        //更新应用的viewModel，会触发activity的跳转事件
-        viewModel.getNickname().setValue(nickname);
-        viewModel.getIsAssociationAdmin().setValue(isAssociationAdmin);
-        viewModel.getUserInfo().setValue(user);
+        return user;
     }
 
+    /**
+     * 登录失败的回调操作
+     * @param errorString 提示信息
+     */
     private void onLoginFailed(String errorString) {
         PromptUtil.snackbarShowTxt(root, errorString);
     }
@@ -294,3 +323,4 @@ public class LoginFragment extends Fragment implements TabLayout.OnTabSelectedLi
         }
     }
 }
+

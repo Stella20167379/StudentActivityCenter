@@ -70,12 +70,6 @@
         android:label="fragment_forget_pass_first"
         tools:layout="@layout/fragment_forget_pass_first" >
     </fragment>
-<!--  重置密码的第二种方法，输入新旧密码  -->
-    <fragment
-        android:id="@+id/forgetPassSecondFragment"
-        android:name="com.example.graduatedesign.ui.login.ForgetPassSecondFragment"
-        android:label="fragment_forget_pass_second"
-        tools:layout="@layout/fragment_forget_pass_second" />
 
 <!--  showAppBottomNav 参数若设置为true，则显示应用最外层的底部导航栏  -->
     <!--  登录成功后，最外层导航的首页  -->
@@ -119,5 +113,59 @@
             android:name="showAppBottomNav"
             android:defaultValue="true" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_activity_detail_holder"
+        android:name="com.example.graduatedesign.student_activity_module.ui.detail.ActivityDetailHolderFragment"
+        android:label="fragment_activity_detail_holder"
+        tools:layout="@layout/fragment_activity_detail_holder" />
+    <fragment
+        android:id="@+id/navigation_activity_search"
+        android:name="com.example.graduatedesign.student_activity_module.ui.search.ActivitySearchFragment"
+        android:label="ActivitySearchFragment" />
+    <fragment
+        android:id="@+id/associationEditFragment"
+        android:name="com.example.graduatedesign.association_module.ui.edit.AssociationEditFragment"
+        android:label="AssociationEditFragment" />
+    <fragment
+        android:id="@+id/activityAddFragment"
+        android:name="com.example.graduatedesign.student_activity_module.ui.add.ActivityAddFragment"
+        android:label="fragment_activity_add"
+        tools:layout="@layout/fragment_activity_add" />
+
+    <fragment
+        android:id="@+id/personalDetailFragment"
+        android:name="com.example.graduatedesign.personal_module.ui.detail.PersonalDetailFragment"
+        android:label="fragment_personal_detail"
+        tools:layout="@layout/fragment_personal_detail" />
+    <fragment
+        android:id="@+id/associationDetailFragment"
+        android:name="com.example.graduatedesign.association_module.ui.detail.AssociationDetailFragment"
+        android:label="AssociationDetailFragment" />
+    <fragment
+        android:id="@+id/bulletinDetailFragment"
+        android:name="com.example.graduatedesign.ui.bulletin.BulletinDetailFragment"
+        android:label="fragment_bulletin_detail"
+        tools:layout="@layout/fragment_with_one_recyclerview" />
+
+    <fragment
+        android:id="@+id/oneInputFragment"
+        android:name="com.example.graduatedesign.custom.OneInputFragment"
+        android:label="OneInputFragment" />
+    <fragment
+        android:id="@+id/myAssociationFragment"
+        android:name="com.example.graduatedesign.personal_module.ui.association.MyAssociationFragment"
+        android:label="MyAssociationFragment" />
+    <fragment
+        android:id="@+id/myRecordFragment"
+        android:name="com.example.graduatedesign.personal_module.ui.pay_record.MyRecordFragment"
+        android:label="MyRecordFragment" />
+    <fragment
+        android:id="@+id/myCommentFragment"
+        android:name="com.example.graduatedesign.personal_module.ui.comment.MyCommentFragment"
+        android:label="MyCommentFragment" />
+    <fragment
+        android:id="@+id/showMembersFragment"
+        android:name="com.example.graduatedesign.association_module.ui.show_members.ShowMembersFragment"
+        android:label="ShowMembersFragment" />
 
 </navigation>

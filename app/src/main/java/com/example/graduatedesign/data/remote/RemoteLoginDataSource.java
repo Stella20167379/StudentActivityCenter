@@ -38,9 +38,9 @@ public class RemoteLoginDataSource {
                 .getLoginVerifyCode(email);
     }
 
-    public Single<NetResult> validateToken(String token,String refreshToken){
+    public Single<NetResult> validateToken(String tokenName,String token){
         return retrofit.create(LoginService.class)
-                .validateToken(token,refreshToken);
+                .validateToken();
     }
 
     public Single<NetResult> getCollegeList(){

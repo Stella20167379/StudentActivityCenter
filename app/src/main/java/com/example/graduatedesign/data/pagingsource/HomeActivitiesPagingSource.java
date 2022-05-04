@@ -18,10 +18,23 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomeActivitiesPagingSource extends RxPagingSource<Integer, MyStudentActivity> {
     private final RemoteApiService service;
+    private Integer schoolId;
+    private String key;
 
-    public HomeActivitiesPagingSource(@NonNull RemoteApiService service) {
+    public HomeActivitiesPagingSource(@NonNull RemoteApiService service, Integer schoolId, String key) {
         this.service = service;
+        this.schoolId = schoolId;
+        this.key = key;
     }
+
+    public void setSchoolId(Integer schoolId) {
+        this.schoolId = schoolId;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
 
     @Nullable
     @Override
@@ -37,7 +50,7 @@ public class HomeActivitiesPagingSource extends RxPagingSource<Integer, MyStuden
         if (page==null)
             page=1;
         Integer size = loadParams.getLoadSize();
-        return service.getPageActivities(page,size)
+        return service.getPageActivities(page,size,schoolId,key)
                 .subscribeOn(Schedulers.io())
                 .map(this::toLoadResult)
                 .onErrorReturn(LoadResult.Error::new);

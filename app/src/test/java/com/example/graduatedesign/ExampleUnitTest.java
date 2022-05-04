@@ -9,9 +9,12 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.example.graduatedesign.data.MyDatabase;
+import com.example.graduatedesign.personal_module.data.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -25,5 +28,13 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
+    @Test
+    public void mapToBeanTest(){
+        Map<String,Object> data=new HashMap<>();
+        data.put("id",11);
+        data.put("nickname","zhangsan");
+        User user= (User) data;
+        System.out.println(user.getNickname());
+    }
 
 }

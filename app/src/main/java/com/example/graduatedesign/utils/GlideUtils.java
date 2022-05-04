@@ -17,4 +17,13 @@ public class GlideUtils {
             ;
 
 
+    /**
+     * 返回拼接后的可以访问的图片路径
+     * @param imgPath 图片的相对路径
+     * @return
+     */
+    public static String getImgDownloadUri(String imgPath){
+        return "http://10.0.2.2:3165/img/"+imgPath;
+    }
+
 }

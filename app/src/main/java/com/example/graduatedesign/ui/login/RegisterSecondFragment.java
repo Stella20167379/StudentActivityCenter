@@ -12,9 +12,11 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavInflater;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
@@ -44,6 +46,7 @@ public class RegisterSecondFragment extends Fragment {
         root = binding.getRoot();
         viewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         args = getArguments();
+
         return root;
     }
 
@@ -58,6 +61,8 @@ public class RegisterSecondFragment extends Fragment {
         final EditText passView = binding.email;
         final EditText verifyCodeView = binding.verifyCode;
         final ProgressBar progressBar = binding.progressBar;
+
+        initBackToolBar();
 
         /* ------------------- 绑定ViewModel中数据与页面中视图控件 ----------------- */
         /* 以下是实现数据改变->视图改变 */
@@ -177,4 +182,15 @@ public class RegisterSecondFragment extends Fragment {
         PromptUtil.snackbarShowTxt(root, msg);
     }
 
+    /**
+     * 给头顶工具栏添加事件
+     */
+    private void initBackToolBar(){
+        /* 在onCreateView中找不到NavController */
+        Toolbar toolbar=binding.toolbar;
+        toolbar.setNavigationOnClickListener(v-> {
+            final NavController navController= Navigation.findNavController(root);
+            navController.popBackStack();
+        });
+    }
 }

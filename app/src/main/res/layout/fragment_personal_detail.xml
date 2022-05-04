@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".personal_module.ui.detail.PersonalDetailFragment">
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24">
+
+        <TextView
+            android:id="@+id/fragment_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="个人资料"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/toolbar" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/portrait"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:elevation="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/portrait_title"
+        app:layout_constraintEnd_toStartOf="@+id/edit_portrait"
+        app:layout_constraintTop_toTopOf="@+id/portrait_title"
+        app:shapeAppearanceOverlay="@style/circleImageStyle"
+        tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/portrait_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="头像"
+        android:textColor="@color/gray_700"
+        android:textSize="16sp"
+        android:layout_marginStart="@dimen/txt_margin_medium"
+        android:layout_marginTop="@dimen/edit_vertical_margin_large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <ImageView
+        android:id="@+id/edit_portrait"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/ic_more_right_black"
+        android:padding="15dp"
+        android:layout_marginEnd="@dimen/txt_margin_medium"
+        app:layout_constraintBottom_toBottomOf="@+id/portrait"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/portrait" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/association_name"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintStart_toStartOf="@id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/portrait" />
+
+    <TextView
+        android:id="@+id/association_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="昵称"
+        android:textColor="@color/gray_700"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/edit_vertical_margin_large"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/portrait" />
+
+    <ImageView
+        android:id="@+id/edit_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:padding="15dp"
+        android:src="@drawable/ic_more_right_black"
+        app:layout_constraintBottom_toBottomOf="@+id/association_name"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintTop_toTopOf="@+id/association_name" />
+
+    <TextView
+        android:id="@+id/nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="这是某个用户的昵称看看能有多长测试测试 "
+        android:ellipsize="marquee"
+        android:maxEms="13"
+        android:maxLines="1"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        app:layout_constraintBottom_toBottomOf="@+id/association_name"
+        app:layout_constraintEnd_toEndOf="@+id/portrait"
+        app:layout_constraintTop_toTopOf="@+id/association_name" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/real_name_title"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/association_name" />
+
+    <TextView
+        android:id="@+id/real_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="真实姓名"
+        android:textColor="@color/gray_700"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/edit_vertical_margin_large"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/association_name" />
+
+    <TextView
+        android:id="@+id/real_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="askdfjksdf:sdfks "
+        app:layout_constraintBottom_toBottomOf="@+id/real_name_title"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintTop_toTopOf="@+id/real_name_title" />
+
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/sex_title"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/real_name_title" />
+
+    <TextView
+        android:id="@+id/sex_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/edit_vertical_margin_large"
+        android:text="性别"
+        android:textColor="@color/gray_700"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/real_name_title" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/sex"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:minWidth="80dp"
+        android:scaleY="1.3"
+        android:textOff="男"
+        android:textOn="女"
+        app:layout_constraintBottom_toBottomOf="@+id/sex_title"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintTop_toTopOf="@+id/sex_title"
+        app:showText="true" />
+
+    <View
+        android:id="@+id/divider5"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/principal_title"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/sex_title" />
+
+    <TextView
+        android:id="@+id/principal_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="学号"
+        android:textColor="@color/gray_700"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/edit_vertical_margin_large"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/sex_title" />
+
+    <TextView
+        android:id="@+id/principal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="B学号5555"
+        app:layout_constraintBottom_toBottomOf="@+id/principal_title"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintTop_toTopOf="@+id/principal_title" />
+
+    <View
+        android:id="@+id/divider6"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/role_title"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/principal_title" />
+
+    <TextView
+        android:id="@+id/role_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="身份"
+        android:textColor="@color/gray_700"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/edit_vertical_margin_large"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/principal_title" />
+
+    <TextView
+        android:id="@+id/role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="学生"
+        app:layout_constraintBottom_toBottomOf="@+id/role_title"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintTop_toTopOf="@+id/role_title" />
+
+    <View
+        android:id="@+id/divider8"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/email_title"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/role_title" />
+
+
+    <TextView
+        android:id="@+id/email_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/edit_vertical_margin_large"
+        android:text="邮箱"
+        android:textColor="@color/gray_700"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/role_title" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="这是一个邮箱@aa.com"
+        app:layout_constraintBottom_toBottomOf="@+id/email_title"
+        app:layout_constraintEnd_toEndOf="@+id/role"
+        app:layout_constraintTop_toTopOf="@+id/email_title" />
+
+    <View
+        android:id="@+id/divider9"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/major_class_title"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/email_title" />
+
+    <TextView
+        android:id="@+id/major_class_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="班级"
+        android:textColor="@color/gray_700"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/edit_vertical_margin_large"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/email_title" />
+
+    <TextView
+        android:id="@+id/major_class"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="25红薯5班"
+        app:layout_constraintBottom_toBottomOf="@+id/major_class_title"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintTop_toTopOf="@+id/major_class_title" />
+
+    <View
+        android:id="@+id/divider10"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        android:layout_marginTop="@dimen/txt_margin_medium"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/major_class_title" />
+
+    <Button
+        android:id="@+id/edit_submit_btn"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/selector_btn"
+        android:text="@string/txt_submit"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/edit_portrait"
+        app:layout_constraintStart_toStartOf="@+id/portrait_title"
+        app:layout_constraintTop_toBottomOf="@+id/major_class_title" />
+
+
+    <View
+        android:id="@+id/blankPlaceHolder"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_submit_btn" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

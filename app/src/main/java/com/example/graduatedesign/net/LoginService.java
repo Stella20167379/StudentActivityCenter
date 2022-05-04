@@ -26,22 +26,25 @@ public interface LoginService {
     Single<NetResult> register(@Body Map data);
 
     @POST("free/validate/token")
-    Single<NetResult> validateToken(@Header("token") String token,@Header("refreshToken") String refreshToken);
+    Single<NetResult> validateToken();
 
+    //TODO：去掉本功能
     @GET("college")
     Single<NetResult> getCollegeList();
 
     @FormUrlEncoded
-    @POST("free/validate/studentno")
+    @POST("free/validate/studentNo")
     Single<NetResult> validateStudentNo(@Field("collegeId") Integer collegeId, @Field("studentNo") String studentNo);
 
     @GET("free/register/code")
     Single<NetResult> getRegisterVerifyCode(@Query("email") String email);
 
+    //TODO:后端还没写这个
     @FormUrlEncoded
     @POST("free/reset/pass")
     Single<NetResult> resetPass(@FieldMap Map<String,String> resetData);
 
+    //TODO:后端还没写这个
     @GET("free/reset/code")
     Single<NetResult> getResetPassVerifyCode(@Query("email") String email);
 }

@@ -24,6 +24,7 @@ import com.example.graduatedesign.data.LoginRepository;
 import com.example.graduatedesign.data.MyDatabase;
 import com.example.graduatedesign.data.model.College;
 import com.example.graduatedesign.databinding.FragmentRegisterFirstBinding;
+import com.example.graduatedesign.presenter.RegisterFirstContract;
 import com.example.graduatedesign.presenter.RegisterFirstPresenter;
 import com.example.graduatedesign.utils.RxLifecycleUtils;
 
@@ -38,7 +39,7 @@ import io.reactivex.rxjava3.core.SingleOnSubscribe;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @AndroidEntryPoint
-public class RegisterFirstFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class RegisterFirstFragment extends Fragment implements AdapterView.OnItemSelectedListener, RegisterFirstContract.IRegisterFirstView {
 
     @Inject
     LoginRepository repository;
@@ -46,7 +47,7 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
     private static final String TAG = "RegisterFirstFragment";
     private FragmentRegisterFirstBinding binding;
     private View root;
-    private RegisterFirstPresenter presenter;
+    private RegisterFirstContract.IRegisterFirstPresenter presenter;
 
     private Integer selectedCollegeId = null;
     private String studentNo = null;
@@ -67,34 +68,20 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
 
         TextView textView = binding.studentNo;
 
-        Button btn = binding.continueBtn;
+        Toolbar toolbar = binding.toolbar;
+        toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(root).popBackStack());
+
+        initCollegeInfo();
+
+        final Button btn = binding.continueBtn;
         btn.setOnClickListener(v -> {
             studentNo = textView.getText().toString();
-            if (TextUtils.isEmpty(studentNo)) {
+            if (TextUtils.isEmpty(studentNo) || studentNo.trim().length() < 1) {
                 textView.setError("学号不能为空");
             } else {
                 presenter.validateStudentNo(repository, selectedCollegeId, studentNo);
             }
         });
-
-        Toolbar toolbar = binding.toolbar;
-        toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(root).popBackStack());
-
-        Single.create((SingleOnSubscribe<List<College>>) emitter -> {
-            MyDatabase myDatabase = MyDatabase.getDatabase(getContext());
-            List<College> collegeList = myDatabase.getCollegeDao().getAllCollege();
-            emitter.onSuccess(collegeList);
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .to(RxLifecycleUtils.bindLifecycle(this))
-                .subscribe(collegeList -> {
-                            CollegeSpinnerAdapter adapter = new CollegeSpinnerAdapter(collegeList);
-                            final Spinner spinner = binding.spinner;
-                            spinner.setAdapter(adapter);
-                            spinner.setOnItemSelectedListener(this);
-                        },
-                        throwable -> throwable.printStackTrace()
-                );
 
     }
 
@@ -119,8 +106,30 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
     }
 
     /**
+     * 初始化下拉框信息
+     */
+    public void initCollegeInfo() {
+        Single.create((SingleOnSubscribe<List<College>>) emitter -> {
+            MyDatabase myDatabase = MyDatabase.getDatabase(getContext());
+            List<College> collegeList = myDatabase.getCollegeDao().getAllCollege();
+            emitter.onSuccess(collegeList);
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .to(RxLifecycleUtils.bindLifecycle(this))
+                .subscribe(collegeList -> {
+                            CollegeSpinnerAdapter adapter = new CollegeSpinnerAdapter(collegeList);
+                            final Spinner spinner = binding.spinner;
+                            spinner.setAdapter(adapter);
+                            spinner.setOnItemSelectedListener(this);
+                        },
+                        throwable -> throwable.printStackTrace()
+                );
+    }
+
+    /**
      * 用户输入学号合法时的回调
      */
+    @Override
     public void onPassStudentNo() {
         NavController navController = Navigation.findNavController(root);
 
@@ -136,7 +145,9 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
      *
      * @param msg 要展示给用户看的错误信息
      */
+    @Override
     public void onDenyStudentNo(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
+
 }

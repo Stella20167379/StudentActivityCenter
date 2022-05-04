@@ -1,112 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp"
-    tools:context=".ui.home.HomeFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="isAnyAssociationAdmin"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/Theme.AppCompat.DayNight.DarkActionBar"
-        app:title=""
-        app:menu="@menu/top_home_menu">
+        android:layout_height="match_parent"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        tools:context=".ui.home.HomeFragment">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxEms="8"
-            android:maxLines="1"
-            android:text="算法的空间克隆第三方"
-            android:textColor="@color/black" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar2"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/Theme.AppCompat.DayNight.DarkActionBar">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="30dp"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxEms="5"
-            android:text="某某大学" />
+            <TextView
+                android:id="@+id/nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxEms="8"
+                android:maxLines="1"
+                android:text="算法的空间克隆第三方"
+                android:textColor="@color/black" />
 
-    </androidx.appcompat.widget.Toolbar>
+            <TextView
+                android:id="@+id/school_name_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="30dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxEms="5"
+                android:text="某某大学" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:elevation="15dp"
-        android:padding="10dp"
-        app:cardCornerRadius="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2">
+        </androidx.appcompat.widget.Toolbar>
 
-        <com.example.graduatedesign.customview.EditTextWithDel
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:textCursorDrawable="@null"
+        <ImageButton
+            android:id="@+id/add_activity_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:visibility="@{isAnyAssociationAdmin ? View.VISIBLE : View.GONE}"
+            android:scaleType="fitXY"
+            android:background="@color/white"
+            android:src="@drawable/ic_add_green_24"
+            app:layout_constraintBottom_toTopOf="@+id/divider1"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar2"
+            app:layout_constraintTop_toTopOf="@+id/toolbar2" />
+
+        <!--    活动卡片列表-->
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+
+        <com.example.graduatedesign.custom.EditTextWithDel
+            android:id="@+id/editTextWithDel"
+            android:layout_width="220dp"
+            android:layout_height="38dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/shape_rec_txt_background"
             android:gravity="center_vertical"
             android:hint="@string/prompt_search_key"
-            android:maxLines="1" />
+            android:paddingStart="10dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/search_btn"
+            app:layout_constraintStart_toEndOf="@+id/filter_btn"
+            app:layout_constraintTop_toTopOf="@+id/filter_btn" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/search_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="300dp"
-            android:src="@drawable/ic_search_white_24"
             android:background="@drawable/selector_btn"
-             />
+            android:src="@drawable/ic_search_white_24"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar2"
+            app:layout_constraintTop_toTopOf="@+id/filter_btn" />
 
-    </androidx.cardview.widget.CardView>
+        <ImageButton
+            android:id="@+id/filter_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/selector_btn"
+            android:src="@drawable/ic_filter_white_24"
+            app:layout_constraintStart_toStartOf="@+id/toolbar2"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
-<!--    活动卡片列表-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activities_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/filter_btn" />
 
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
-    <View
-        android:id="@+id/blankPlaceHolder"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activities_recycler_view" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/divider2">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/blankPlaceHolder" />
+        </com.google.android.material.tabs.TabLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tabs" />
+
+        <View
+            android:id="@+id/blankPlaceHolder"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewpager" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -59,7 +59,7 @@ public class CollegeSpinnerAdapter extends BaseAdapter {
 
         public void bind(View convertView,College item){
             itemTxt=convertView.findViewById(R.id.textView3);
-            itemTxt.setText(item.getCollege_name());
+            itemTxt.setText(item.getCollegeName());
         }
 
     }

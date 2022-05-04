@@ -3,23 +3,28 @@ package com.example.graduatedesign.data.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-public class Message {
+public class Message implements Serializable {
     //消息id
     @PrimaryKey
     private int id;
-    //消息类别：社团通知，系统通知，等
+    //是 自己发送-1 的还是 接收到的-2，只在客户端有效
     private int type;
     //发送人名称
     private String sender;
+    //发送人头像
+    private String senderPortrait;
     //发送人id
     private int senderId;
     //消息内容
     private String content;
     //发送时间
-    private LocalDateTime sendTime;
+    private String sendTime;
+    //是否是入会申请 1-普通消息，- 2-入会申请
+    private int msgType;
     //是否已读
     private int state;
     //接收人
@@ -65,11 +70,11 @@ public class Message {
         this.state = state;
     }
 
-    public LocalDateTime getSendTime() {
+    public String getSendTime() {
         return sendTime;
     }
 
-    public void setSendTime(LocalDateTime sendTime) {
+    public void setSendTime(String sendTime) {
         this.sendTime = sendTime;
     }
 
@@ -88,4 +93,21 @@ public class Message {
     public void setSenderId(int senderId) {
         this.senderId = senderId;
     }
+
+    public int getMsgType() {
+        return msgType;
+    }
+
+    public void setMsgType(int msgType) {
+        this.msgType = msgType;
+    }
+
+    public String getSenderPortrait() {
+        return senderPortrait;
+    }
+
+    public void setSenderPortrait(String senderPortrait) {
+        this.senderPortrait = senderPortrait;
+    }
+
 }

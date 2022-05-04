@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:elevation="5dp"
     android:padding="10dp"
+    tools:viewBindingIgnore="true"
     >
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -23,11 +24,11 @@
         android:id="@+id/senderName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="10dp"
-        tools:text="某某人"
+        android:layout_marginTop="@dimen/txt_margin_small_medium"
         app:layout_constraintStart_toEndOf="@+id/senderImg"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/senderImg"
+        tools:text="某某人" />
 
     <TextView
         android:id="@+id/date"

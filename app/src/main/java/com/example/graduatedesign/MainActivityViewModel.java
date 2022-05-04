@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel;
 import com.example.graduatedesign.data.LoginRepository;
 import com.example.graduatedesign.data.model.Result;
 import com.example.graduatedesign.net.RetrofitExceptionResolver;
+import com.example.graduatedesign.personal_module.data.User;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -19,10 +22,8 @@ public class MainActivityViewModel extends ViewModel {
     private static final String TAG = "MainActivityViewModel";
     private String loginPrompt;
     private final LoginRepository loginRepository;
-    private final MutableLiveData<String> nickname = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> isAssociationAdmin = new MutableLiveData<>();
     /* 控制登录状态、页面跳转的参数，null-未登录，其余-登录 请勿随意修改 */
-    private final MutableLiveData<LoggedInUser> userInfo = new MutableLiveData<>();
+    private final MutableLiveData<User> userInfo = new MutableLiveData<>();
     private final MutableLiveData<Boolean> tokenState=new MutableLiveData<>();
 
     @Inject
@@ -30,7 +31,7 @@ public class MainActivityViewModel extends ViewModel {
         this.loginRepository = loginRepository;
     }
 
-    public MutableLiveData<LoggedInUser> getUserInfo() {
+    public MutableLiveData<User> getUserInfo() {
         return userInfo;
     }
 
@@ -43,9 +44,9 @@ public class MainActivityViewModel extends ViewModel {
      * 对不同的登录状态，通过改变 userInfo 的值手动触发事件跳转页面
      *
      */
-    public void checkLoginState(String token,String refreshToken) {
+    public void checkLoginState(String tokenName,String token) {
         if (token != null) {
-            loginRepository.validateToken(token,refreshToken)
+            loginRepository.validateToken(tokenName,token)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
@@ -67,14 +68,6 @@ public class MainActivityViewModel extends ViewModel {
             loginPrompt = null;
             userInfo.setValue(null);
         }
-    }
-
-    public MutableLiveData<String> getNickname() {
-        return nickname;
-    }
-
-    public MutableLiveData<Boolean> getIsAssociationAdmin() {
-        return isAssociationAdmin;
     }
 
     public String getLoginPrompt() {

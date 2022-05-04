@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey;
 public class College {
     @PrimaryKey
     private Integer id;
-    private String college_name;
-    private String badge_img;
+    private String collegeName;
+    private String badgeImg;
 
     public Integer getId() {
         return id;
@@ -18,28 +18,20 @@ public class College {
         this.id = id;
     }
 
-    public String getCollege_name() {
-        return college_name;
+
+    public String getCollegeName() {
+        return collegeName;
     }
 
-    public void setCollege_name(String college_name) {
-        this.college_name = college_name;
+    public void setCollegeName(String collegeName) {
+        this.collegeName = collegeName;
     }
 
-    public String getBadge_img() {
-        return badge_img;
+    public String getBadgeImg() {
+        return badgeImg;
     }
 
-    public void setBadge_img(String badge_img) {
-        this.badge_img = badge_img;
-    }
-
-    @Override
-    public String toString() {
-        return "College{" +
-                "id=" + id +
-                ", college_name='" + college_name + '\'' +
-                ", badge_img='" + badge_img + '\'' +
-                '}';
+    public void setBadgeImg(String badgeImg) {
+        this.badgeImg = badgeImg;
     }
 }

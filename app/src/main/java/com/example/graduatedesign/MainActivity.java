@@ -15,7 +15,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.graduatedesign.databinding.ActivityMainBinding;
+import com.example.graduatedesign.personal_module.data.User;
 import com.example.graduatedesign.ui.message.MessageViewModel;
+import com.example.graduatedesign.utils.PromptUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private MainActivityViewModel viewModel;
     private View root;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,71 +42,12 @@ public class MainActivity extends AppCompatActivity {
         //获取本activity布局中的fragment显示容器-navHostFragment,再获取其navController
         final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment_activity_main);
-        final NavController navController = navHostFragment.getNavController();
+        navController = navHostFragment.getNavController();
 
         //将navController和布局中的导航栏视图绑定
         NavigationUI.setupWithNavController(binding.navView, navController);
         //添加导航监听器
         hideOrShowNavigation(navController, binding.navView);
-
-        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-
-        /* 可能是由于生命周期原因(也有可能是地方放错了，总之懒得改了)，以下两个监听回调若分开放在onCreate+onStart，会造成死锁，控制台打印了两遍跳转页面时的log */
-        //启动应用时，验证token状态的回调
-        viewModel.getTokenState().observe(this, state -> {
-            if (state == null)
-                return;
-            //token验证结果为有效
-            if (state) {
-                //取出SharedPreferences中存储的用户信息，放入内存备用
-                //尝试获取已登录保存过的用户信息
-                SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-                int userId = sp.getInt("userId", -1);
-                String schoolName = sp.getString("schoolName", null);
-                String email = sp.getString("email", null);
-                int credentialInfoId = sp.getInt("credentialInfoId", -1);
-                String portrait = sp.getString("portrait", null);
-
-                LoggedInUser loggedInUser = new LoggedInUser();
-                loggedInUser.setUserId(userId);
-                loggedInUser.setEmail(email);
-                loggedInUser.setPortrait(portrait);
-                loggedInUser.setCredentialInfoId(credentialInfoId);
-                loggedInUser.setSchoolName(schoolName);
-
-                //触发登录成功，跳转首页的事件
-                viewModel.getUserInfo().setValue(loggedInUser);
-
-            }
-        });
-
-        //用户信息改变时的监听器
-        viewModel.getUserInfo().observe(this, loggedInUser1 -> {
-            //登录失败，或者登录失效，总之就是未登录状态
-            if (loggedInUser1 == null) {
-
-                String prompt = viewModel.getLoginPrompt();
-                if (prompt != null) {
-                    new AlertDialog.Builder(this)
-                            .setMessage(prompt)
-                            .setPositiveButton("确定", (dialogInterface, i) -> {
-                                switchFragment(navController, R.id.navigation_login);
-                            })
-                            .create()
-                            .show();
-                } else {
-                    Log.d(TAG, "onCreate: 没有登录提示，所以没有弹框");
-                    switchFragment(navController, R.id.navigation_login);
-                }
-            }
-            //登录成功专属
-            else {
-                //跳转页面
-                switchFragment(navController, R.id.navigation_home);
-                //请求后端，查询未读信息存入数据库
-                checkUnreadMessages();
-            }
-        });
 
     }
 
@@ -111,15 +55,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        //打开应用时，viewModel保存信息默认值为空，要手动触发监听器事件
-        if (viewModel.getUserInfo().getValue() == null) {
-            SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-            String token = sp.getString("token", null);
-            String refreshToken = sp.getString("refreshToken", null);
+        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        //token登录时，要取出存储的用户信息
+        viewModel.getTokenState().observe(this, tokenState -> {
+            if (tokenState)
+                retrieveUserFromSP();
+        });
+        //正常登录时，对用户信息改变的监听器
+        viewModel.getUserInfo().observe(this, User1 -> {
+            //登录失败，或者登录失效，总之就是未登录状态
+            if (User1 == null) {
+                navigateToLogin();
+            }
+            //登录成功专属
+            else {
+                navigateToHome();
+            }
+        });
 
-            viewModel.checkLoginState(token, refreshToken);
-
-        }
     }
 
     @Override
@@ -167,15 +120,69 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * 登录成功后，取出登录用户的信息，查询后端接口，获取未读信息用以更新数据库
+     * token有效，取出SharedPreferences中存储的用户信息，放入内存缓存
+     */
+    private void retrieveUserFromSP() {
+        SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        User user = new User();
+        user.setId(sp.getInt("id", -1));
+        user.setSchoolName(sp.getString("schoolName", null));
+        user.setNickname(sp.getString("nickname", null));
+        user.setEmail(sp.getString("email", null));
+        user.setPortrait(sp.getString("portrait", null));
+        user.setCredentialNum(sp.getString("credentialNum", null));
+        user.setCredentialInfoId(sp.getInt("credentialInfoId", -1));
+        user.setSchoolId(sp.getInt("schoolId", -1));
+        user.setRealName(sp.getString("realName", null));
+        user.setSex(sp.getBoolean("sex", false));
+        user.setRole(sp.getString("role", null));
+        user.setMajorClass(sp.getString("majorClass", null));
+        user.setAssociationAdmin(sp.getBoolean("isAssociationAdmin", false));
+
+        viewModel.getUserInfo().setValue(user);
+    }
+
+    /**
+     * 登录失败，或登录状态失效，跳转至登录页面
+     */
+    private void navigateToLogin() {
+        String prompt = viewModel.getLoginPrompt();
+        if (prompt != null) {
+            new AlertDialog.Builder(this)
+                    .setMessage(prompt)
+                    .setPositiveButton("确定", (dialogInterface, i) -> {
+                        switchFragment(navController, R.id.navigation_login);
+                    })
+                    .create()
+                    .show();
+        } else {
+            Log.d(TAG, "onCreate: 没有登录提示，所以没有弹框");
+            switchFragment(navController, R.id.navigation_login);
+        }
+    }
+
+    /**
+     * 登录成功，或在登录状态，跳转至首页，同时进行信息的一些初始化工作
+     */
+    private void navigateToHome() {
+        //跳转页面
+        switchFragment(navController, R.id.navigation_home);
+        //请求后端，查询未读信息
+//        checkUnreadMessages();
+    }
+
+    /**
+     * 登录成功后，取出登录用户的信息，查询后端接口，获取未读信息
      */
     private void checkUnreadMessages() {
-        LoggedInUser user = viewModel.getUserInfo().getValue();
-        if (user == null)
-            throw new IllegalStateException("登录成功跳转页面，却没有获得对应的用户信息！");
-        Integer userId = user.getUserId();
+        User user = viewModel.getUserInfo().getValue();
+        if (user == null) {
+            PromptUtil.snackbarShowTxt(root, "网络错误");
+            return;
+        }
+        Integer userId = user.getId();
         MessageViewModel messageViewModel = new ViewModelProvider(this).get(MessageViewModel.class);
-        messageViewModel.initMessageData(userId,this);
+        messageViewModel.initMessageData(userId, this);
     }
 
 }

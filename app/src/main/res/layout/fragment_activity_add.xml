@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable name="isPay" type="Boolean" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        tools:context=".student_activity_module.ui.add.ActivityAddFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/ic_arrow_back_black_24">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="新建活动"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <TextView
+                android:id="@+id/title_activity_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                android:text="标题"
+                android:textColor="@color/gray_700"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+            <TextView
+                android:id="@+id/sign_start_date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                android:text="报名起始时间"
+                android:textColor="@color/gray_700"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/title_activity_new"
+                app:layout_constraintTop_toBottomOf="@+id/title_activity_new" />
+
+            <TextView
+                android:id="@+id/sign_end_date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                android:text="报名截止时间"
+                android:textColor="@color/gray_700"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/title_activity_new"
+                app:layout_constraintTop_toBottomOf="@+id/sign_start_date_title" />
+
+            <TextView
+                android:id="@+id/activity_start_date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                android:text="活动起始时间"
+                android:textColor="@color/gray_700"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/title_activity_new"
+                app:layout_constraintTop_toBottomOf="@+id/sign_end_date_title" />
+
+            <TextView
+                android:id="@+id/activity_end_date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                android:text="活动结束时间"
+                android:textColor="@color/gray_700"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/title_activity_new"
+                app:layout_constraintTop_toBottomOf="@+id/activity_start_date_title" />
+
+            <TextView
+                android:id="@+id/location_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="活动地点"
+                android:textColor="@color/gray_700"
+                android:textSize="16sp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintStart_toStartOf="@+id/title_activity_new"
+                app:layout_constraintTop_toBottomOf="@+id/fund_use" />
+
+            <TextView
+                android:id="@+id/association_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                android:text="所属社团"
+                android:textColor="@color/gray_700"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/title_activity_new"
+                app:layout_constraintTop_toBottomOf="@+id/location_title" />
+
+            <TextView
+                android:id="@+id/introduction_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                android:text="活动介绍"
+                android:textColor="@color/gray_700"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/title_activity_new"
+                app:layout_constraintTop_toBottomOf="@+id/association_title" />
+
+            <TextView
+                android:id="@+id/cover_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                android:text="上传封面"
+                android:textColor="@color/gray_700"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/title_activity_new"
+                app:layout_constraintTop_toBottomOf="@+id/introduction" />
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+            <com.example.graduatedesign.custom.EditTextWithDel
+                android:id="@+id/title_input"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_title_input"
+                android:inputType="text"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/title_activity_new"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/title_activity_new"
+                app:layout_constraintTop_toTopOf="@+id/title_activity_new" />
+
+            <TextView
+                android:id="@+id/sign_start_datetime"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/txt_margin_medium"
+                android:clickable="true"
+                tools:text="@string/special_show_activity_datetime"
+                android:textColor="@color/black"
+                android:padding="5dp"
+                android:gravity="center"
+                android:background="@drawable/shape_rec_background_shadow"
+                app:layout_constraintBottom_toBottomOf="@+id/sign_start_date_title"
+                app:layout_constraintStart_toEndOf="@+id/sign_start_date_title"
+                app:layout_constraintTop_toTopOf="@+id/sign_start_date_title" />
+
+            <TextView
+                android:id="@+id/sign_end_datetime"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                tools:text="@string/special_show_activity_datetime"
+                android:clickable="true"
+                android:textColor="@color/black"
+                android:padding="5dp"
+                android:gravity="center"
+                android:background="@drawable/shape_rec_background_shadow"
+                app:layout_constraintBottom_toBottomOf="@+id/sign_end_date_title"
+                app:layout_constraintStart_toStartOf="@+id/sign_start_datetime"
+                app:layout_constraintTop_toTopOf="@+id/sign_end_date_title" />
+
+            <TextView
+                android:id="@+id/activity_start_datetime"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                tools:text="@string/special_show_activity_datetime"
+                android:clickable="true"
+                android:textColor="@color/black"
+                android:padding="5dp"
+                android:gravity="center"
+                android:background="@drawable/shape_rec_background_shadow"
+                app:layout_constraintBottom_toBottomOf="@+id/activity_start_date_title"
+                app:layout_constraintStart_toStartOf="@+id/sign_start_datetime"
+                app:layout_constraintTop_toTopOf="@+id/activity_start_date_title" />
+
+            <TextView
+                android:id="@+id/activity_end_datetime"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                tools:text="@string/special_show_activity_datetime"
+                android:clickable="true"
+                android:textColor="@color/black"
+                android:padding="5dp"
+                android:gravity="center"
+                android:background="@drawable/shape_rec_background_shadow"
+                app:layout_constraintBottom_toBottomOf="@+id/activity_end_date_title"
+                app:layout_constraintStart_toStartOf="@+id/sign_start_datetime"
+                app:layout_constraintTop_toTopOf="@+id/activity_end_date_title" />
+
+            <com.example.graduatedesign.custom.EditTextWithDel
+                android:id="@+id/location"
+                android:layout_width="290dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/location_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/location_title"
+                app:layout_constraintTop_toTopOf="@+id/location_title" />
+
+            <EditText
+                android:id="@+id/introduction"
+                android:layout_width="290dp"
+                android:layout_height="140dp"
+                android:background="@drawable/shape_rec_background_shadow"
+                android:padding="6dp"
+                android:gravity="start"
+                android:inputType="text"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@+id/location"
+                app:layout_constraintTop_toTopOf="@+id/introduction_title" />
+
+
+            <ImageView
+                android:id="@+id/upload_img_view"
+                android:layout_width="290dp"
+                android:layout_height="200dp"
+                android:background="@drawable/shape_rec_background_shadow"
+                android:clickable="true"
+                android:src="@drawable/ic_add_green_24"
+                app:layout_constraintStart_toStartOf="@id/location"
+                app:layout_constraintTop_toTopOf="@id/cover_title" />
+
+            <Button
+                android:id="@+id/submit_btn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                android:background="@drawable/selector_btn"
+                android:text="@string/txt_submit"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/upload_img_view" />
+
+            <View
+                android:id="@+id/blankPlaceHolder"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/submit_btn" />
+
+
+            <Spinner
+                android:id="@+id/association_spinner"
+                android:layout_width="290dp"
+                android:layout_height="40dp"
+                android:background="@drawable/shape_rec_background_shadow"
+                app:layout_constraintBottom_toBottomOf="@+id/association_title"
+                app:layout_constraintStart_toStartOf="@+id/location"
+                app:layout_constraintTop_toTopOf="@+id/association_title" />
+
+            <TextView
+                android:id="@+id/is_need_pay_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="是否付费"
+                android:textColor="@color/gray_700"
+                android:textSize="16sp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintStart_toStartOf="@+id/title_activity_new"
+                app:layout_constraintTop_toBottomOf="@+id/activity_end_date_title" />
+
+            <Switch
+                android:id="@+id/switch_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleY="1.1"
+                android:switchMinWidth="55dp"
+                android:layout_marginStart="@dimen/edit_vertical_margin_large"
+                app:layout_constraintStart_toEndOf="@id/is_need_pay_title"
+                app:layout_constraintBottom_toBottomOf="@+id/is_need_pay_title"
+                app:layout_constraintTop_toTopOf="@+id/is_need_pay_title" />
+
+            <!--   收费详情编辑 START     -->
+            <TextView
+                android:id="@+id/pay_num_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="单人收费"
+                android:visibility="@{isPay?View.VISIBLE:View.GONE}"
+                android:textColor="@color/gray_700"
+                android:textSize="16sp"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                app:layout_constraintTop_toBottomOf="@id/is_need_pay_title"
+                app:layout_constraintStart_toStartOf="@+id/title_activity_new" />
+
+            <EditText
+                android:id="@+id/pay_num_input"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:visibility="@{isPay?View.VISIBLE:View.GONE}"
+                android:inputType="number"
+                app:layout_constraintBottom_toBottomOf="@+id/pay_num_title"
+                app:layout_constraintStart_toStartOf="@+id/switch_pay"
+                app:layout_constraintTop_toTopOf="@+id/pay_num_title" />
+
+            <TextView
+                android:id="@+id/charge_account_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收费账号"
+                android:visibility="@{isPay?View.VISIBLE:View.GONE}"
+                android:textColor="@color/gray_700"
+                android:textSize="16sp"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                app:layout_constraintTop_toBottomOf="@id/pay_num_title"
+                app:layout_constraintStart_toStartOf="@+id/title_activity_new" />
+
+            <com.example.graduatedesign.custom.EditTextWithDel
+                android:id="@+id/charge_account"
+                android:layout_width="290dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:visibility="@{isPay?View.VISIBLE:View.GONE}"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/charge_account_title"
+                app:layout_constraintStart_toStartOf="@+id/location"
+                app:layout_constraintTop_toTopOf="@+id/charge_account_title" />
+
+            <TextView
+                android:id="@+id/fund_use_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="资金用途"
+                android:visibility="@{isPay?View.VISIBLE:View.GONE}"
+                android:textColor="@color/gray_700"
+                android:textSize="16sp"
+                android:layout_marginTop="@dimen/edit_vertical_margin_large"
+                app:layout_constraintTop_toBottomOf="@id/charge_account_title"
+                app:layout_constraintStart_toStartOf="@+id/title_activity_new" />
+
+            <EditText
+                android:id="@+id/fund_use"
+                android:layout_width="290dp"
+                android:layout_height="90dp"
+                android:background="@drawable/shape_rec_background_shadow"
+                android:padding="6dp"
+                android:visibility="@{isPay?View.VISIBLE:View.GONE}"
+                android:gravity="start"
+                android:inputType="text"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@+id/location"
+                app:layout_constraintTop_toTopOf="@+id/fund_use_title" />
+            <!--   收费详情编辑 END     -->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>
