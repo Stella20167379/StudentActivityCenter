@@ -1,27 +1,36 @@
 package com.example.graduatedesign.adapter;
 
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.List;
 
 public class MyPagerAdapter extends FragmentStateAdapter {
     private final List<String> fragmentClazzList;
+    private Bundle bundle = null;
 
     public MyPagerAdapter(@NonNull Fragment fragment, List<String> fragmentClazzList) {
         super(fragment);
-        this.fragmentClazzList=fragmentClazzList;
+        this.fragmentClazzList = fragmentClazzList;
+    }
+
+    public MyPagerAdapter(@NonNull Fragment fragment, List<String> fragmentClazzList, Bundle bundle) {
+        super(fragment);
+        this.fragmentClazzList = fragmentClazzList;
+        this.bundle = bundle;
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
         try {
-            return (Fragment) Class.forName(fragmentClazzList.get(position)).newInstance();
+            Fragment fragment = (Fragment) Class.forName(fragmentClazzList.get(position)).newInstance();
+            if (this.bundle != null)
+                fragment.setArguments(bundle);
+            return fragment;
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

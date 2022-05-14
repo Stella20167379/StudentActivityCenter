@@ -99,7 +99,7 @@
     <!--  消息详情页面  -->
     <fragment
         android:id="@+id/navigation_messageDetail"
-        android:name="com.example.graduatedesign.ui.message.MessageDetailFragment"
+        android:name="com.example.graduatedesign.message_module.ui.detail.MessageDetailFragment"
         android:label="fragment_message_detail"
         tools:layout="@layout/fragment_message_detail">
     </fragment>
@@ -115,7 +115,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_activity_detail_holder"
-        android:name="com.example.graduatedesign.student_activity_module.ui.detail.ActivityDetailHolderFragment"
+        android:name="com.example.graduatedesign.student_activity_module.ui.detailholder.ActivityDetailHolderFragment"
         android:label="fragment_activity_detail_holder"
         tools:layout="@layout/fragment_activity_detail_holder" />
     <fragment
@@ -133,11 +133,6 @@
         tools:layout="@layout/fragment_activity_add" />
 
     <fragment
-        android:id="@+id/personalDetailFragment"
-        android:name="com.example.graduatedesign.personal_module.ui.detail.PersonalDetailFragment"
-        android:label="fragment_personal_detail"
-        tools:layout="@layout/fragment_personal_detail" />
-    <fragment
         android:id="@+id/associationDetailFragment"
         android:name="com.example.graduatedesign.association_module.ui.detail.AssociationDetailFragment"
         android:label="AssociationDetailFragment" />
@@ -147,10 +142,6 @@
         android:label="fragment_bulletin_detail"
         tools:layout="@layout/fragment_with_one_recyclerview" />
 
-    <fragment
-        android:id="@+id/oneInputFragment"
-        android:name="com.example.graduatedesign.custom.OneInputFragment"
-        android:label="OneInputFragment" />
     <fragment
         android:id="@+id/myAssociationFragment"
         android:name="com.example.graduatedesign.personal_module.ui.association.MyAssociationFragment"
@@ -167,5 +158,22 @@
         android:id="@+id/showMembersFragment"
         android:name="com.example.graduatedesign.association_module.ui.show_members.ShowMembersFragment"
         android:label="ShowMembersFragment" />
+    <fragment
+        android:id="@+id/personalDetailFragment"
+        android:name="com.example.graduatedesign.personal_module.ui.detail.PersonalDetailFragment"
+        android:label="fragment_personal_detail"
+        tools:layout="@layout/fragment_personal_detail" />
+    <fragment
+        android:id="@+id/QRCodeShowFragment"
+        android:name="com.example.graduatedesign.student_activity_module.ui.qr_code.QRCodeShowFragment"
+        android:label="QRCodeShowFragment" />
+    <fragment
+        android:id="@+id/myCaptureFragment"
+        android:name="com.example.graduatedesign.student_activity_module.ui.scan.MyCaptureFragment"
+        android:label="MyCaptureFragment" />
+    <fragment
+        android:id="@+id/associationEnterApplyFragment"
+        android:name="com.example.graduatedesign.message_module.ui.enter_apply.AssociationEnterApplyFragment"
+        android:label="AssociationEnterApplyFragment" />
 
 </navigation>

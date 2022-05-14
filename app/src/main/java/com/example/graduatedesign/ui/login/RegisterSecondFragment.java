@@ -16,7 +16,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavInflater;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
@@ -58,7 +57,7 @@ public class RegisterSecondFragment extends Fragment {
         final Button getVerifyCodeBtn = binding.btnGetVerifyCode;
         final EditText emailView = binding.email;
         final EditText nicknameView = binding.nickname;
-        final EditText passView = binding.email;
+        final EditText passView = binding.credential;
         final EditText verifyCodeView = binding.verifyCode;
         final ProgressBar progressBar = binding.progressBar;
 
@@ -124,14 +123,16 @@ public class RegisterSecondFragment extends Fragment {
             progressBar.setVisibility(View.VISIBLE);
 
             Integer collegeId = args.getInt("collegeId");
-            String studentNo = args.getString("studentNo");
+            int credentialInfoId = args.getInt("credentialInfoId");
+            String verifyCode = verifyCodeView.getText().toString();
             String nickname = nicknameView.getText().toString();
             String pass = passView.getText().toString();
             String email = emailView.getText().toString();
 
             Map<String, Object> registerData = new HashMap<>();
+            registerData.put("verifyCode", verifyCode);
             registerData.put("collegeId", collegeId);
-            registerData.put("studentNo", studentNo);
+            registerData.put("credentialInfoId", credentialInfoId);
             registerData.put("nickname", nickname);
             registerData.put("pass", pass);
             registerData.put("email", email);

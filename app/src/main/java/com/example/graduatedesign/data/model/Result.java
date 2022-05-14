@@ -2,10 +2,12 @@ package com.example.graduatedesign.data.model;
 
 import com.example.graduatedesign.net.RetrofitExceptionResolver;
 
+import java.io.Serializable;
+
 /**
  * 访问服务器得的统一格式的 NetResult 结果后，根据业务需求解析成统一的 Result 对象供视图层使用
  */
-public class Result {
+public class Result implements Serializable {
     // hide the private constructor to limit subclass types (Success,Fail, Error)
     private Result() {
     }

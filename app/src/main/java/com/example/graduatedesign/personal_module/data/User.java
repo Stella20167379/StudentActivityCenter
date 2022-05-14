@@ -8,7 +8,6 @@ public class User implements Serializable {
     private String schoolName;
     private String nickname;
     private String portrait;
-    private String realName;
 //    T-女,F-男
     private boolean sex;
     //学号/工号id
@@ -51,14 +50,6 @@ public class User implements Serializable {
 
     public void setPortrait(String portrait) {
         this.portrait = portrait;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
-        this.realName = realName;
     }
 
     public String getCredentialNum() {

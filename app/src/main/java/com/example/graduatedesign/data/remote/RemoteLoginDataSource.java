@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import com.example.graduatedesign.data.model.NetResult;
 import com.example.graduatedesign.net.LoginService;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -41,11 +40,6 @@ public class RemoteLoginDataSource {
     public Single<NetResult> validateToken(String tokenName,String token){
         return retrofit.create(LoginService.class)
                 .validateToken();
-    }
-
-    public Single<NetResult> getCollegeList(){
-        return retrofit.create(LoginService.class)
-                .getCollegeList();
     }
 
     public Single<NetResult> validateStudentNo(Integer collegeId,String studentNo){

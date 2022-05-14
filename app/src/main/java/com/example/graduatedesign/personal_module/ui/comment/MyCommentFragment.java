@@ -45,10 +45,12 @@ public class MyCommentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding= FragmentWithOneRecyclerviewBinding.inflate(inflater,container,false);
-        root=binding.getRoot();
-        presenter=new MyCommentPresenter(this);
-        progressBar= binding.progressBar;
+        binding = FragmentWithOneRecyclerviewBinding.inflate(inflater, container, false);
+        root = binding.getRoot();
+        presenter = new MyCommentPresenter(this);
+        /* 别忘了加上观察者，才能起作用啊！ */
+        getLifecycle().addObserver(presenter);
+        progressBar = binding.progressBar;
         return root;
     }
 
@@ -82,6 +84,7 @@ public class MyCommentFragment extends Fragment {
     }
 
     public void onInitSuccess(List<Comment> data){
+        progressBar.setVisibility(View.INVISIBLE);
         adapter.submitList(data);
     }
 

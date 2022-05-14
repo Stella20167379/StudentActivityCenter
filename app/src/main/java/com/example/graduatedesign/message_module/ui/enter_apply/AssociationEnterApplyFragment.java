@@ -1,11 +1,13 @@
 package com.example.graduatedesign.message_module.ui.enter_apply;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,11 +25,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.graduatedesign.MainActivityViewModel;
 import com.example.graduatedesign.R;
-import com.example.graduatedesign.data.MyRepository;
 import com.example.graduatedesign.data.model.Message;
 import com.example.graduatedesign.databinding.FragmentWithOneRecyclerviewBinding;
-import com.example.graduatedesign.utils.DataUtil;
+import com.example.graduatedesign.net.netty.AppCache;
+import com.example.graduatedesign.utils.ArrayMapBuilder;
 import com.example.graduatedesign.utils.GlideUtils;
+import com.example.graduatedesign.utils.GsonConvertTypes;
+import com.example.graduatedesign.utils.PromptUtil;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 import java.util.List;
 
@@ -37,21 +43,23 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class AssociationEnterApplyFragment extends Fragment {
-    @Inject
-    MyRepository repository;
-
+    private static final String TAG = "AssociationEnterApplyFr";
     private FragmentWithOneRecyclerviewBinding binding;
     private View root;
-    private AssociationEnterApplyPresenter presenter;
     private AssociationEnterApplyAdapter adapter;
+    @Inject
+    Gson gson;
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentWithOneRecyclerviewBinding.inflate(inflater, container, false);
         root = binding.getRoot();
-        presenter=new AssociationEnterApplyPresenter(this);
-        adapter=new AssociationEnterApplyAdapter();
+        adapter = new AssociationEnterApplyAdapter();
+        recyclerView = binding.recyclerView;
+        progressBar = binding.progressBar;
         return root;
     }
 
@@ -61,8 +69,7 @@ public class AssociationEnterApplyFragment extends Fragment {
 
         final TextView title= binding.toolbarTitle;
         final Toolbar toolbar=binding.toolbar;
-        final RecyclerView recyclerView= binding.recyclerView;
-        final MainActivityViewModel activityViewModel=new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
+
 
         toolbar.setNavigationOnClickListener(v->{
             final NavController navController= Navigation.findNavController(root);
@@ -74,19 +81,67 @@ public class AssociationEnterApplyFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        presenter.initData(repository,activityViewModel.getUserInfo().getValue().getId());
+        initData();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        root=null;
-        binding=null;
+        root = null;
+        binding = null;
+    }
+
+    private void initData() {
+        Integer userId = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class).getUserInfo().getValue().getId();
+        try {
+            String url = "message/get/apply";
+            String body = gson.toJson(new ArrayMapBuilder().put("userId", userId).build());
+            AppCache.getService().sendActionMsg(url, body, (code, msg, o) -> {
+                if (code == 200) {
+                    List data = (List) o;
+
+                    JsonElement jsonElement = gson.toJsonTree(data);
+                    List<Message> applyList = gson.fromJson(jsonElement, GsonConvertTypes.gsonTypeOfMessageList);
+                    adapter.submitList(applyList);
+                    adapter.notifyDataSetChanged();
+
+                    progressBar.setVisibility(View.GONE);
+                    PromptUtil.snackbarShowTxt(root, "初始化成功");
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    PromptUtil.showAlert(getContext(), "信息初始化错误： " + msg);
+                }
+            });
+        } catch (Exception e) {
+            Log.d(TAG, "onViewCreated: 信息初始化失败");
+            progressBar.setVisibility(View.GONE);
+            PromptUtil.showAlert(getContext(), "socket未登录，信息初始化失败");
+        }
+    }
+
+    private void updateEnterApplyState(Integer applyId, boolean TOrF) {
+        try {
+            String url = "message/edit/apply";
+            String body = gson.toJson(new ArrayMapBuilder().put("TOrF", TOrF).put("applyId", applyId).build());
+            AppCache.getService().sendActionMsg(url, body, (code, msg, o) -> {
+                if (code == 200) {
+                    Message message = (Message) o;
+                    int size = adapter.getItemCount();
+                    adapter.getCurrentList().add(message);
+                    adapter.notifyItemChanged(size);
+                    PromptUtil.snackbarShowTxt(root, "操作成功");
+                } else {
+                    PromptUtil.snackbarShowTxt(root, "操作失败 " + msg);
+                }
+            });
+        } catch (Exception e) {
+            PromptUtil.showAlert(getContext(), "操作失败");
+        }
     }
 
     class AssociationEnterApplyAdapter extends RecyclerView.Adapter<AssociationEnterApplyHolder> {
         private final AsyncListDiffer<Message> mDiffer;
-        private final DiffUtil.ItemCallback<Message> diffCallback=new DiffUtil.ItemCallback<Message>() {
+        private final DiffUtil.ItemCallback<Message> diffCallback = new DiffUtil.ItemCallback<Message>() {
             @Override
             public boolean areItemsTheSame(@NonNull Message oldItem, @NonNull Message newItem) {
                 return oldItem == newItem;
@@ -120,6 +175,10 @@ public class AssociationEnterApplyFragment extends Fragment {
             return mDiffer.getCurrentList().size();
         }
 
+        public List<Message> getCurrentList() {
+            return mDiffer.getCurrentList();
+        }
+
         public void submitList(List<Message> data) {
             mDiffer.submitList(data);
         }
@@ -128,7 +187,6 @@ public class AssociationEnterApplyFragment extends Fragment {
             return mDiffer.getCurrentList().get(position);
         }
     }
-
 
     class AssociationEnterApplyHolder extends RecyclerView.ViewHolder {
         private final View itemView;
@@ -156,18 +214,27 @@ public class AssociationEnterApplyFragment extends Fragment {
                 return;
 
             Glide.with(itemView)
-                    .load(DataUtil.getImgDownloadUri(message.getSenderPortrait()))
+                    .load(GlideUtils.getImgDownloadUri(message.getSenderPortrait()))
                     .apply(GlideUtils.OPTIONS)
                     .into(portrait);
+
             senderName.setText(message.getSender());
             applyContent.setText(message.getContent());
-//todo:完善
-            yesBtn.setOnClickListener(v->{
-                presenter.passEnterApply();
-            });
-            noBtn.setOnClickListener(v->{
-                presenter.denyEnterApply();
-            });
+            if (message.isApplyState()) {
+                yesBtn.setEnabled(false);
+                yesBtn.setText("已通过");
+                noBtn.setEnabled(false);
+            } else {
+                yesBtn.setEnabled(true);
+                yesBtn.setText("通过");
+                noBtn.setEnabled(true);
+                yesBtn.setOnClickListener(v -> {
+                    updateEnterApplyState(message.getId(), true);
+                });
+                noBtn.setOnClickListener(v -> {
+                    updateEnterApplyState(message.getId(), false);
+                });
+            }
         }
     }
 

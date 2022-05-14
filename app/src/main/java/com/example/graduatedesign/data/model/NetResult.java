@@ -1,13 +1,16 @@
 package com.example.graduatedesign.data.model;
 
+import java.io.Serializable;
+
 import io.reactivex.rxjava3.annotations.NonNull;
 
 /**
  * 成功连接后台服务器后，服务器返回的结果
+ *
  * @param <T>
  */
-public class NetResult<T> {
-    private  @NonNull int code;
+public class NetResult<T> implements Serializable {
+    private @NonNull int code;
     private String msg;
     private T data;
 

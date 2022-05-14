@@ -1,12 +1,12 @@
 package com.example.graduatedesign.ui.personal;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.graduatedesign.data.MyRepository;
 import com.example.graduatedesign.data.model.MyStudentActivity;
-import com.example.graduatedesign.personal_module.data.User;
+import com.example.graduatedesign.utils.RxLifecycleUtils;
 
 import java.util.List;
 
@@ -32,9 +32,22 @@ public class PersonalViewModel extends ViewModel {
 
     /**
      * 查询当前用户参与的活动，显示总览
-     * @param userId 当前用户id
+     *
+     * @param lifecycleOwner 拥有生命周期的视图，用于绑定rxjava流的有效作用域，在onStop()情况下自动结束流
+     * @param userId         当前用户id
      */
-    public void initMyActivities(int userId){
-
+    public void initMyActivities(LifecycleOwner lifecycleOwner, int userId) {
+        myRepository.getActivitiesForUser(userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .to(RxLifecycleUtils.bindLifecycle(lifecycleOwner))
+                .subscribe(activities -> {
+                            myActivities.setValue(activities);
+                        }, throwable -> {
+                            throwable.printStackTrace();
+                        }
+                );
     }
+
+
 }

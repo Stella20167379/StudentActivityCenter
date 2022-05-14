@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.graduatedesign.R;
 import com.example.graduatedesign.personal_module.data.PayRecord;
-import com.example.graduatedesign.utils.DataUtil;
 import com.example.graduatedesign.utils.GlideUtils;
 
 public class MyPayRecordHolder extends RecyclerView.ViewHolder {
@@ -43,7 +42,7 @@ public class MyPayRecordHolder extends RecyclerView.ViewHolder {
             return;
 
         Glide.with(itemView)
-                .load(DataUtil.getImgDownloadUri(record.getActivityCover()))
+                .load(GlideUtils.getImgDownloadUri(record.getActivityCover()))
                 .apply(GlideUtils.OPTIONS)
                 .into(cover);
         activityName.setText(record.getActivityName());

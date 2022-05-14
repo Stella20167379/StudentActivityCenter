@@ -4,7 +4,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Entity
 public class Message implements Serializable {
@@ -27,8 +26,15 @@ public class Message implements Serializable {
     private int msgType;
     //是否已读
     private int state;
+    //作为入会申请时，是否通过
+    private boolean applyState;
     //接收人
     private int receiverId;
+    /**
+     * 记录社团id
+     */
+    private Boolean associationId;
+
 
     public int getId() {
         return id;
@@ -110,4 +116,19 @@ public class Message implements Serializable {
         this.senderPortrait = senderPortrait;
     }
 
+    public boolean isApplyState() {
+        return applyState;
+    }
+
+    public void setApplyState(boolean applyState) {
+        this.applyState = applyState;
+    }
+
+    public Boolean getAssociationId() {
+        return associationId;
+    }
+
+    public void setAssociationId(Boolean associationId) {
+        this.associationId = associationId;
+    }
 }

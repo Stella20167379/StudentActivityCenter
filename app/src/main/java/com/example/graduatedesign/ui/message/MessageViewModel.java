@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.graduatedesign.data.MyDatabase;
 import com.example.graduatedesign.data.MyRepository;
 import com.example.graduatedesign.data.model.Message;
 
@@ -23,15 +22,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  */
 @HiltViewModel
 public class MessageViewModel extends ViewModel {
-
-    //TODO:取消缓存所有消息列表，在初始化消息时筛选总览信息列表，详情消息应从数据库查找并置于viewModel共享
-    private MutableLiveData<List<Message>> messages = new MutableLiveData<>();
-    private MutableLiveData<List<Message>> overViewMessages = new MutableLiveData<>();
-    private MutableLiveData<List<Message>> detailMessages = new MutableLiveData<>();
-
-    private MutableLiveData<String> toolbarTitle = new MutableLiveData<>("消息");
-    private MutableLiveData<Integer> senderId = new MutableLiveData<>();
-    private MyDatabase myDatabase;
     private final MyRepository myRepository;
 
     @Inject
@@ -39,16 +29,29 @@ public class MessageViewModel extends ViewModel {
         this.myRepository = myRepository;
     }
 
-    public MutableLiveData<List<Message>> getMessages() {
-        return messages;
+    /**
+     * 展示的总览消息列表
+     */
+    private MutableLiveData<List<Message>> overViewMessages = new MutableLiveData<>();
+    /**
+     * 当前用户查看的详情信息列表
+     */
+    private MutableLiveData<List<Message>> detailMessages = new MutableLiveData<>();
+    /**
+     * 用户发送的入会申请
+     */
+    private MutableLiveData<List<Message>> applyMessages = new MutableLiveData<>();
+
+    public MutableLiveData<List<Message>> getApplyMessages() {
+        return applyMessages;
     }
 
-    public MutableLiveData<String> getToolbarTitle() {
-        return toolbarTitle;
+    public MutableLiveData<List<Message>> getDetailMessages() {
+        return detailMessages;
     }
 
-    public MutableLiveData<Integer> getSenderId() {
-        return senderId;
+    public MutableLiveData<List<Message>> getOverViewMessages() {
+        return overViewMessages;
     }
 
     /**
@@ -58,9 +61,9 @@ public class MessageViewModel extends ViewModel {
      * 2-用户点击消息item，在detail页面中向服务器发送请求告知已读
      * 注：可在后续优化中设置分页
      */
+    @Deprecated
     public void initMessageData(Integer userId, Context context) {
-        if (getMessages().getValue() != null)
-            return;
+
         Single.create((SingleOnSubscribe<List<Message>>) emitter -> {
 
         }).subscribeOn(Schedulers.io())
@@ -68,7 +71,7 @@ public class MessageViewModel extends ViewModel {
                         }
                         , throwable -> throwable.printStackTrace());
 
-        myRepository.getMessageFromNet(userId)
+        myRepository.getMessagesFromNet(userId)
                 .subscribeOn(Schedulers.io())
                 .subscribe(messages -> {
                     /**

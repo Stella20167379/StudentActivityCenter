@@ -3,18 +3,14 @@ package com.example.graduatedesign.association_module.adapter.viewholder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.graduatedesign.R;
-import com.example.graduatedesign.association_module.ui.AssociationViewModel;
 import com.example.graduatedesign.personal_module.data.User;
-import com.example.graduatedesign.utils.DataUtil;
 import com.example.graduatedesign.utils.GlideUtils;
 
 public class ShowMembersHolder extends RecyclerView.ViewHolder {
@@ -46,7 +42,7 @@ public class ShowMembersHolder extends RecyclerView.ViewHolder {
             return;
 
         Glide.with(itemView)
-                .load(DataUtil.getImgDownloadUri(user.getPortrait()))
+                .load(GlideUtils.getImgDownloadUri(user.getPortrait()))
                 .apply(GlideUtils.OPTIONS)
                 .into(portrait);
         nickname.setText(user.getNickname());

@@ -21,7 +21,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class LoginViewModel extends ViewModel {
     private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private final MutableLiveData<Result> loginResult = new MutableLiveData<>();
-    private final MutableLiveData<Integer> loginType = new MutableLiveData(1);
+    private Integer loginType = 1;
     private MutableLiveData<String> verifyCodeError = new MutableLiveData<>();
     private final LoginRepository loginRepository;
 
@@ -38,8 +38,12 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public MutableLiveData<Integer> getLoginType() {
+    public Integer getLoginType() {
         return loginType;
+    }
+
+    public void setLoginType(Integer loginType) {
+        this.loginType = loginType;
     }
 
     public MutableLiveData<String> getVerifyCodeError() {
@@ -49,18 +53,18 @@ public class LoginViewModel extends ViewModel {
     /**
      * 登录输入框内容变化后，初步检验是否合法
      */
-    public void onLoginFormChanged(String principle, String credential,String verifyCode) {
+    public void onLoginFormChanged(String principle, String credential, String verifyCode) {
         LoginFormState state = new LoginFormState(false);
-        if (loginType.getValue() == 1){
+        if (loginType == 1) {
             if (!isPrincipleValid(principle))
                 state.setPrincipalError(R.string.error_invalid_principle);
             else if (!isCredentialValid(credential))
                 state.setCredentialError(R.string.error_invalid_credential);
             else state.setDataValid(true);
-        }else {
+        } else {
             if (!isPrincipleValid(principle))
                 state.setPrincipalError(R.string.error_invalid_email);
-            else if (!isCredentialValid(credential))
+            else if (!isCredentialValid(verifyCode))
                 state.setCredentialError(R.string.error_invalid_verify_code);
             else state.setDataValid(true);
         }
@@ -84,12 +88,14 @@ public class LoginViewModel extends ViewModel {
         return credential != null && credential.trim().length() > 5;
     }
 
-    private boolean isVerifyCodeValid(String verifyCode) {
-        return verifyCode != null && verifyCode.trim().length() == 6;
-    }
-
+    /**
+     * 登录验证
+     *
+     * @param principle  登录账号，此为邮箱
+     * @param credential 登录密码/验证码
+     */
     public void login(String principle, String credential) {
-        loginRepository.login(principle, credential, loginType.getValue())
+        loginRepository.login(principle, credential, loginType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ConsumerSingleObserver<>(
@@ -101,12 +107,19 @@ public class LoginViewModel extends ViewModel {
                 );
 
     }
+
+    /**
+     * 验证码登录时请求发送验证码邮件
+     *
+     * @param email 邮箱
+     */
     public void getLoginVerifyCode(String email) {
         loginRepository.getLoginVerifyCode(email)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        () -> {},
+                        () -> {
+                        },
                         throwable -> verifyCodeError.setValue(RetrofitExceptionResolver.resolve(throwable))
                 );
     }

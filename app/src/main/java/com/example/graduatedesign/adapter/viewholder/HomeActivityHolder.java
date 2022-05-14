@@ -1,5 +1,6 @@
 package com.example.graduatedesign.adapter.viewholder;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.graduatedesign.utils.GlideUtils;
 import java.time.LocalDateTime;
 
 public class HomeActivityHolder extends RecyclerView.ViewHolder {
+    private static final String TAG = "HomeActivityHolder";
 
     private final View itemView;
 
@@ -29,10 +31,10 @@ public class HomeActivityHolder extends RecyclerView.ViewHolder {
     private final TextView association;
     //活动报名时间
     private final TextView signTime;
-    //活动人数上限
-    private final TextView sumLimit;
     //活动状态
     private final TextView stateView;
+    //活动收费
+    private final TextView chargeAmount;
 
     public HomeActivityHolder(@NonNull View itemView) {
         super(itemView);
@@ -43,8 +45,8 @@ public class HomeActivityHolder extends RecyclerView.ViewHolder {
         title = itemView.findViewById(R.id.activity_title);
         association = itemView.findViewById(R.id.association_title);
         signTime = itemView.findViewById(R.id.signTime_title);
-        sumLimit = itemView.findViewById(R.id.sumLimit);
         stateView = itemView.findViewById(R.id.state);
+        chargeAmount = itemView.findViewById(R.id.charge_amount);
     }
 
     public static HomeActivityHolder create(ViewGroup parent) {
@@ -57,16 +59,20 @@ public class HomeActivityHolder extends RecyclerView.ViewHolder {
         if (studentActivity == null)
             return;
 
+        Log.d(TAG, "bind获取收费金额为： " + studentActivity.getChargeAmount());
+        if (studentActivity.getChargeAmount() != null && studentActivity.getChargeAmount() != 0)
+            chargeAmount.setText(studentActivity.getChargeAmount() + "元");
+
         Glide.with(itemView)
-                .load(DataUtil.getImgDownloadUri(studentActivity.getCoverImg()))
+                .load(GlideUtils.getImgDownloadUri(studentActivity.getCoverImg()))
                 .apply(GlideUtils.OPTIONS)
                 .into(cover);
         title.setText(studentActivity.getTitle());
         association.setText(studentActivity.getAssociationName());
-        signTime.setText(studentActivity.getSignStart()+"-"+studentActivity.getSignEnd());
-        sumLimit.setText(studentActivity.getSumLimit());
+        String activityTime = studentActivity.getSignStart().substring(0, 10) + "-" + studentActivity.getSignEnd().substring(0, 10);
+        signTime.setText(activityTime);
 
-        String state="已结束";
+        String state = "已结束";
         String nowStr = DataUtil.dateToString(LocalDateTime.now(), true);
         if (DataUtil.compareDatetimeStr(studentActivity.getActivityStart(), nowStr))
             state = "未开始";

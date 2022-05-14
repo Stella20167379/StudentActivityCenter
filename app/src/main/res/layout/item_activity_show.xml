@@ -51,21 +51,21 @@
         />
 
     <TextView
-        android:id="@+id/sumLimit"
+        android:id="@+id/charge_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="180dp"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="5dp"
-        tools:text="不限人数" />
+        android:text="@string/special_charge_none" />
 
     <TextView
         android:id="@+id/state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="180dp"
-        android:layout_marginStart="250dp"
+        android:layout_marginStart="100dp"
         android:layout_marginEnd="10dp"
-        tools:text="已结束" />
+        android:text="@string/special_activity_state_9" />
 
 </androidx.cardview.widget.CardView>

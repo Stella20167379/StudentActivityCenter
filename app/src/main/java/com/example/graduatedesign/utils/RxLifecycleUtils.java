@@ -20,7 +20,6 @@ public class RxLifecycleUtils {
     }
 
     public static <T> AutoDisposeConverter<T> bindLifecycle(LifecycleOwner lifecycleOwner) {
-        //AutoDispose.autoDisposable(ViewScopeProvider.from(view));
         return AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(lifecycleOwner));
     }
 }

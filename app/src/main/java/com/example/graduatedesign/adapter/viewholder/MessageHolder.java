@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.graduatedesign.R;
 import com.example.graduatedesign.data.model.Message;
-import com.example.graduatedesign.utils.DataUtil;
 import com.example.graduatedesign.utils.GlideUtils;
 
 public class MessageHolder extends RecyclerView.ViewHolder {
@@ -50,11 +49,11 @@ public class MessageHolder extends RecyclerView.ViewHolder {
             return;
 
         Glide.with(itemView)
-                .load(DataUtil.getImgDownloadUri(message.getSenderPortrait()))
+                .load(GlideUtils.getImgDownloadUri(message.getSenderPortrait()))
                 .apply(GlideUtils.OPTIONS)
                 .into(portrait);
         senderName.setText(message.getSender());
-        dateTxt.setText(message.getSendTime().toString());
+        dateTxt.setText(message.getSendTime());
         content.setText(message.getContent());
     }
 

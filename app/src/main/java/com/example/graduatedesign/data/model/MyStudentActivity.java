@@ -1,6 +1,12 @@
 package com.example.graduatedesign.data.model;
 
-public class MyStudentActivity {
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class MyStudentActivity implements Cloneable, Serializable {
     private int id;
     //活动标题
     private String title;
@@ -12,8 +18,8 @@ public class MyStudentActivity {
     private String activityStart;
     //活动举行的截止日期
     private String activityEnd;
-    //活动人数上限
-    private int sumLimit;
+    //举办活动的社团id
+    private int associationId;
     //举办活动的社团名称
     private String associationName;
     //活动封面图片
@@ -22,17 +28,19 @@ public class MyStudentActivity {
     private String location;
     //活动介绍文案
     private String introduction;
-    //负责人id
-    private int adminId;
+    /**
+     * 学校id
+     */
+    private Integer collegeId;
 
     /**
      * 参与状态，-1-活动管理员，0-无关联,1-未签到，2-未签退，3-已签退
      */
     private Integer participantState;
-    //是否付费活动
-    private boolean isPayNeed;
+    //是否付费活动,默认为不收费
+    private boolean isPayNeed = false;
     //单人收费金额
-    private int chargeAmount;
+    private Integer chargeAmount;
     //资金用途
     private String fundUse;
     //支付宝账号
@@ -86,14 +94,6 @@ public class MyStudentActivity {
         this.activityEnd = activityEnd;
     }
 
-    public int getSumLimit() {
-        return sumLimit;
-    }
-
-    public void setSumLimit(int sumLimit) {
-        this.sumLimit = sumLimit;
-    }
-
     public String getAssociationName() {
         return associationName;
     }
@@ -124,14 +124,6 @@ public class MyStudentActivity {
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
-    }
-
-    public int getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(int adminId) {
-        this.adminId = adminId;
     }
 
     public Integer getParticipantState() {
@@ -166,11 +158,60 @@ public class MyStudentActivity {
         this.alipayAccount = alipayAccount;
     }
 
-    public int getChargeAmount() {
+    public Integer getChargeAmount() {
         return chargeAmount;
     }
 
-    public void setChargeAmount(int chargeAmount) {
+    public void setChargeAmount(Integer chargeAmount) {
         this.chargeAmount = chargeAmount;
+    }
+
+    public int getAssociationId() {
+        return associationId;
+    }
+
+    public void setAssociationId(int associationId) {
+        this.associationId = associationId;
+    }
+
+    public Integer getCollegeId() {
+        return collegeId;
+    }
+
+    public void setCollegeId(Integer collegeId) {
+        this.collegeId = collegeId;
+    }
+
+    /**
+     * 使用继承的clone方法实现浅克隆
+     */
+    public MyStudentActivity clone() {
+        try {
+            return (MyStudentActivity) super.clone();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 使用序列化技术实现深克隆
+     */
+    public MyStudentActivity deepClone() {
+        try {
+            //将对象写入流中
+            ByteArrayOutputStream bao = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bao);
+            oos.writeObject(this);//此处写this不写bao
+
+            //将对象从流中取出
+            ByteArrayInputStream bis = new ByteArrayInputStream(bao.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bis);
+            return (MyStudentActivity) ois.readObject();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

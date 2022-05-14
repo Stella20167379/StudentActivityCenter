@@ -23,7 +23,8 @@ public class GlideUtils {
      * @return
      */
     public static String getImgDownloadUri(String imgPath){
-        return "http://10.0.2.2:3165/img/"+imgPath;
+        return "http://172.24.38.102:7365/files/down/" + imgPath;
+//        return "http://10.0.2.2:7365/files/down/"+imgPath;
     }
 
 }

@@ -35,6 +35,7 @@
         android:layout_marginStart="@dimen/txt_margin_medium"
         android:layout_marginEnd="@dimen/txt_margin_medium"
         android:padding="6dp"
+        android:inputType="textMultiLine"
         android:background="@drawable/shape_rec_background_shadow"
         />
 

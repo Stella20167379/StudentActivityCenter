@@ -14,14 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.graduatedesign.MainActivityViewModel;
 import com.example.graduatedesign.databinding.FragmentFirstPageBinding;
-import com.example.graduatedesign.utils.RxLifecycleUtils;
-
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
 
 public class FirstPageFragment extends Fragment {
     private FragmentFirstPageBinding binding;
@@ -49,25 +41,6 @@ public class FirstPageFragment extends Fragment {
              String tokenName = sp.getString("tokenName", null);
          viewModel.checkLoginState(tokenName,token);
          }
-
-        /**
-         final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
-         alertBuilder.setTitle("修改某某某的弹窗");
-         //设置不能通过点击别处取消
-         alertBuilder.setCancelable(false);
-
-         final EditText alertEditTxt = new EditText(getContext());
-         alertEditTxt.setMaxLines(1);
-         alertEditTxt.setTextColor(Color.BLACK);
-
-         alertBuilder.setView(alertEditTxt);
-         AlertDialog dialog=alertBuilder.setPositiveButton("确定", (dialog01, which) -> {
-         String txt = alertEditTxt.getText().toString();
-         Toast.makeText(getContext(), txt, Toast.LENGTH_SHORT).show();
-         }).setNegativeButton("取消", null)
-         .create();
-         */
-
     }
 
     @Override
@@ -76,21 +49,4 @@ public class FirstPageFragment extends Fragment {
         root=null;
         binding = null;
     }
-
-
-
-    /**
-     * 等待2秒进行跳转
-     */
-    public void waitToNavigate() {
-        Completable.create(emitter -> {
-
-        }).delay(2, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .to(RxLifecycleUtils.bindLifecycle(this))
-                .subscribe();
-
-    }
-
 }

@@ -8,8 +8,6 @@ import com.example.graduatedesign.data.model.Result;
 import com.example.graduatedesign.net.RetrofitExceptionResolver;
 import com.example.graduatedesign.personal_module.data.User;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;

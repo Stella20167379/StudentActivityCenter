@@ -5,9 +5,23 @@
     <!-- 声明权限 -->
     <!-- 内部存储读取权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 允许Glide监视连接状态，并在用户从断开连接到已连接网络的状态。 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera.flash" />
+
+    <!-- 如果您的 App 的 targetSdkVersion 大于或等于 30，则需要在 AndroidManifest.xml 中提供下面的应用可见性声明，
+         让支付宝 SDK 感知设备上是否已经安装了支付宝 App。同时，您可能还需要升级 Gradle Plugin 到最新版本。
+         关于 Android 11 的 "应用可见性" 机制，参见 https://developer.android.com/about/versions/11/privacy/package-visibility?hl=zh-cn -->
+    <queries>
+        <package android:name="com.eg.android.AlipayGphoneRC" /> <!-- 支付宝沙箱(最后加了RC) -->
+    </queries>
 
     <application
         android:name=".hilt.MyApplication"
@@ -19,7 +33,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <service
-            android:name=".net.netty.NetService"
+            android:name=".net.netty.PushService"
             android:enabled="true"
             android:exported="true"></service>
 

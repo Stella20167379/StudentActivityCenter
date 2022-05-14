@@ -8,7 +8,6 @@ import com.google.gson.JsonParseException;
 
 import org.json.JSONException;
 
-import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -35,18 +34,32 @@ public class RetrofitExceptionResolver {
             HttpException httpException = (HttpException) e;
             switch (httpException.code()) {
                 case UNAUTHORIZED:
+                    msg = "未授权";
+                    break;
                 case FORBIDDEN:
+                    msg = "服务器拒绝了请求";
+                    break;
                 case NOT_FOUND:
+                    msg = "找不到对应的服务器";
+                    break;
                 case REQUEST_TIMEOUT:
-                case GATEWAY_TIMEOUT:
-                case INTERNAL_SERVER_ERROR:
-                case BAD_GATEWAY:
+                    msg = "连接超时";
+                    break;
                 case SERVICE_UNAVAILABLE:
+                case INTERNAL_SERVER_ERROR:
+                    msg = httpException.getMessage();
+                    break;
+                case GATEWAY_TIMEOUT:
+                case BAD_GATEWAY:
+                    msg = "网关错误";
+                    break;
                 default:
                     msg = "网络错误";
                     break;
             }
             return msg;
+        } else if (e instanceof MyException) {
+            return e.getMessage();
         } else if (e instanceof JsonParseException
                 || e instanceof JSONException
                 || e instanceof ParseException) {
@@ -65,12 +78,14 @@ public class RetrofitExceptionResolver {
     public static void analyzeNetResult(NetResult netResult) {
         if (netResult==null)
             throw new IllegalArgumentException("收到空数据，可能是解析错误或后台bug！");
-        switch (netResult.getCode()){
+        switch (netResult.getCode()) {
             case 201:
             case 200:
                 return;
+            case 707:
+                throw new MyException(707, "登录失效！");
             default:
-                throw new IllegalStateException(netResult.getMsg());
+                throw new MyException(netResult.getCode(), netResult.getMsg());
         }
     }
 

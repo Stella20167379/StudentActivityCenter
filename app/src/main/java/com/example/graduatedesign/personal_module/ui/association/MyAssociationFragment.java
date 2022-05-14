@@ -45,10 +45,12 @@ public class MyAssociationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding= FragmentWithOneRecyclerviewBinding.inflate(inflater,container,false);
-        root=binding.getRoot();
-        presenter=new MyAssociationPresenter(this);
-        progressBar= binding.progressBar;
+        binding = FragmentWithOneRecyclerviewBinding.inflate(inflater, container, false);
+        root = binding.getRoot();
+        presenter = new MyAssociationPresenter(this);
+        /* 别忘了加上观察者，才能起作用啊！ */
+        getLifecycle().addObserver(presenter);
+        progressBar = binding.progressBar;
         return root;
     }
 
@@ -83,6 +85,7 @@ public class MyAssociationFragment extends Fragment {
     }
 
     public void onInitSuccess(List<Association> data){
+        progressBar.setVisibility(View.INVISIBLE);
         adapter.submitList(data);
     }
 

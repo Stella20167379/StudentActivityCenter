@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.graduatedesign.R;
 import com.example.graduatedesign.association_module.data.Association;
-import com.example.graduatedesign.utils.DataUtil;
 import com.example.graduatedesign.utils.GlideUtils;
 
 public class AssociationShowHolder extends RecyclerView.ViewHolder {
@@ -42,10 +41,11 @@ public class AssociationShowHolder extends RecyclerView.ViewHolder {
             return;
 
         Glide.with(itemView)
-                .load(DataUtil.getImgDownloadUri(association.getCover()))
+                .load(GlideUtils.getImgDownloadUri(association.getCoverImg()))
                 .apply(GlideUtils.OPTIONS)
                 .into(cover);
         name.setText(association.getAssociationName());
         introduction.setText(association.getIntroduction());
     }
+
 }

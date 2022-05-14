@@ -1,93 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:background="@color/gray_700"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.message.MessageDetailFragment"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!--   固定在顶部的返回菜单栏     -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="?attr/actionBarSize"
-        android:elevation="4dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_back_black_24"/>
+    <data>
 
-    <TextView
-        android:id="@+id/senderNameTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="某某某"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+        <variable
+            name="title"
+            type="String" />
+    </data>
 
-    <View
-        android:id="@+id/divider"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:elevation="4dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        android:layout_height="match_parent"
+        tools:background="@color/gray_700"
+        tools:context=".message_module.ui.detail.MessageDetailFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/msgDetailShow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        tools:visibility="visible" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:elevation="4dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/msgDetailShow" />
+            <!--   固定在顶部的返回菜单栏     -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/ic_arrow_back_black_24" />
 
-    <com.example.graduatedesign.custom.EditTextWithDel
-        android:id="@+id/input_message"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_rec_txt_background"
-        android:ems="15"
-        android:inputType="textPersonName"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:layout_marginEnd="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_send"
-        app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/senderNameTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{title}"
+                app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
-    <Button
-        android:id="@+id/btn_send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/selector_btn"
-        android:text="发送"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/input_message"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:elevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <View
-        android:id="@+id/blankPlaceHolder"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/msgDetailShow" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/msgDetailShow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:elevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/msgDetailShow" />
+
+            <com.example.graduatedesign.custom.EditTextWithDel
+                android:id="@+id/input_message"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/shape_rec_txt_background"
+                android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/msgDetailShow" />
+
+            <Button
+                android:id="@+id/btn_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_btn"
+                android:text="发送"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/input_message" />
+
+            <View
+                android:id="@+id/blankPlaceHolder"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toBottomOf="@+id/input_message" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

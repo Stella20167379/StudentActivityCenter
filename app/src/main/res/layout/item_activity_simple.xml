@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    tools:viewBindingIgnore="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    tools:viewBindingIgnore="true">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/cover"
@@ -22,13 +22,13 @@
         android:id="@+id/association_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="这是一个活动的标题 "
-        android:textColor="@color/black"
-        android:maxLines="1"
+        android:layout_marginStart="@dimen/txt_margin_medium"
         android:ellipsize="end"
         android:maxWidth="270dp"
-        android:layout_marginStart="@dimen/txt_margin_medium"
-        android:layout_marginTop="@dimen/txt_margin_small_medium"
+        android:maxLines="1"
+        android:text="这是一个活动的标题 "
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/duration_time"
         app:layout_constraintStart_toEndOf="@+id/cover"
         app:layout_constraintTop_toTopOf="@+id/cover" />
 
@@ -36,8 +36,8 @@
         android:id="@+id/duration_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/txt_margin_small"
-        android:text="2022/02/03-2023/03/02"
+        android:text="2022-02-03 10:00 - 2023-03-02 10:00"
+        app:layout_constraintBottom_toTopOf="@+id/activity_state"
         app:layout_constraintStart_toStartOf="@+id/association_name"
         app:layout_constraintTop_toBottomOf="@+id/association_name" />
 
@@ -45,8 +45,8 @@
         android:id="@+id/divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
         android:layout_marginTop="@dimen/txt_margin_tiny"
+        android:background="?android:attr/listDivider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cover" />
 
@@ -55,9 +55,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        tools:text="未。。。"
-        app:layout_constraintBottom_toBottomOf="@+id/duration_time"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/duration_time"
+        tools:text="未。。。" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

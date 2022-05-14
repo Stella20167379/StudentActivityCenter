@@ -105,10 +105,12 @@
         android:drawableLeft="@drawable/ic_person_24"
         android:hint="@string/prompt_account"
         android:selectAllOnFocus="true"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="@+id/tabLayout"
         app:layout_constraintStart_toStartOf="@+id/tabLayout"
         app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
+    <!--    android:imeOptions="actionDone" 设置回车时操作，设置了inputType也可实现不换行 -->
     <EditText
         android:id="@+id/credential"
         android:layout_width="0dp"

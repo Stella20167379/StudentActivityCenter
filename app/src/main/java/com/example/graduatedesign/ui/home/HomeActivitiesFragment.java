@@ -24,9 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.graduatedesign.MainActivityViewModel;
 import com.example.graduatedesign.R;
 import com.example.graduatedesign.adapter.HomeActivityAdapter;
-import com.example.graduatedesign.association_module.data.Association;
 import com.example.graduatedesign.data.model.MyStudentActivity;
 import com.example.graduatedesign.databinding.FragmentWithOneRecyclerviewBinding;
+import com.example.graduatedesign.personal_module.data.User;
 import com.example.graduatedesign.utils.RxLifecycleUtils;
 
 public class HomeActivitiesFragment extends Fragment {
@@ -56,10 +56,10 @@ public class HomeActivitiesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final MainActivityViewModel activityViewModel=new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
-        final ProgressBar progressBar= binding.progressBar;
+        final User user = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class).getUserInfo().getValue();
+        final ProgressBar progressBar = binding.progressBar;
 
-        recyclerView= binding.recyclerView;
+        recyclerView = binding.recyclerView;
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -67,7 +67,7 @@ public class HomeActivitiesFragment extends Fragment {
 
         adapter.addLoadStateListener(
                 combinedLoadStates -> {
-                    LoadState state=combinedLoadStates.getRefresh();
+                    LoadState state = combinedLoadStates.getRefresh();
                     if (state instanceof LoadState.Loading){
                         Log.d(TAG, "Loading: 加载中");
                         progressBar.setVisibility(View.VISIBLE);
@@ -75,8 +75,7 @@ public class HomeActivitiesFragment extends Fragment {
                     else if (state instanceof LoadState.Error){
                         Log.d(TAG, "Error: 出错了");
                         progressBar.setVisibility(View.INVISIBLE);
-                    }
-                    else if (state instanceof LoadState.NotLoading){
+                    } else if (state instanceof LoadState.NotLoading) {
                         Log.d(TAG, "NotLoading: 加载完毕");
                         progressBar.setVisibility(View.INVISIBLE);
                     }
@@ -84,11 +83,14 @@ public class HomeActivitiesFragment extends Fragment {
                 }
         );
 
-        viewModel.getKey().observe(getViewLifecycleOwner(),key->{
-            if (viewModel.getTabOpt()!=0)
+        viewModel.getSearchKey().observe(getViewLifecycleOwner(), key -> {
+            if (viewModel.getTabOpt() != 0)
                 return;
-            keySearchActivity(key,activityViewModel.getUserInfo().getValue().getSchoolId());
+            Log.d(TAG, "onViewCreated: 进入活动搜索");
+            keySearchActivity(key, user.getSchoolId());
         });
+
+        keySearchActivity(null, user.getSchoolId());
     }
 
     @Override
@@ -106,13 +108,19 @@ public class HomeActivitiesFragment extends Fragment {
             public boolean onSingleTapUp(MotionEvent e) {
                 //获取当前触摸点下，recyclerview的子项
                 View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                int position= (int) recyclerView.getChildItemId(child);
-                MyStudentActivity activity=adapter.getAdapterItem(position);
+                int position = (int) recyclerView.getChildAdapterPosition(child);
+
+                /* 放误点 */
+                if (position < 0)
+                    return false;
+
+                Log.d(TAG, "onSingleTapUp，点击获取的索引:" + position);
+                MyStudentActivity activity = adapter.getAdapterItem(position);
                 //携带数据跳转页面
-                Bundle bundle=new Bundle();
-                bundle.putInt("id",activity.getId());
-                final NavController navController= Navigation.findNavController(recyclerView);
-                navController.navigate(R.id.navigation_activity_detail_holder);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", activity.getId());
+                final NavController navController = Navigation.findNavController(recyclerView);
+                navController.navigate(R.id.navigation_activity_detail_holder, bundle);
                 return false;
             }
         };

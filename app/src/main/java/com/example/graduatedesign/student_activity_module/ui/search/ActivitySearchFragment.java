@@ -20,20 +20,26 @@ import com.example.graduatedesign.data.MyRepository;
 import com.example.graduatedesign.data.model.MyStudentActivity;
 import com.example.graduatedesign.databinding.FragmentActivitySearchBinding;
 import com.example.graduatedesign.student_activity_module.adapter.ActivitySimpleAdapter;
+import com.example.graduatedesign.utils.DataUtil;
 import com.example.graduatedesign.utils.PromptUtil;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class ActivitySearchFragment extends Fragment {
     private static final String TAG = "ActivitySearchFragment";
     private FragmentActivitySearchBinding binding;
     private View root;
     private RecyclerView recyclerView;
     private ActivitySimpleAdapter adapter;
+    /* 学校id */
+    private Bundle args;
 
     @Inject
     MyRepository repository;
@@ -42,47 +48,62 @@ public class ActivitySearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding=FragmentActivitySearchBinding.inflate(inflater,container,false);
-        root=binding.getRoot();
-        recyclerView= binding.recyclerView;
-        presenter=new ActivitySearchPresenter(this);
+        binding = FragmentActivitySearchBinding.inflate(inflater, container, false);
+        root = binding.getRoot();
+        recyclerView = binding.recyclerView;
+        presenter = new ActivitySearchPresenter(this);
+        /* 别忘了加上观察者，才能起作用啊！ */
+        getLifecycle().addObserver(presenter);
+
+        args = getArguments();
         return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final Toolbar toolbar=binding.BackToolbar;
-        toolbar.setNavigationOnClickListener(v->{
-            final NavController navController= Navigation.findNavController(root);
+        final Toolbar toolbar = binding.BackToolbar;
+        final NavController navController = Navigation.findNavController(root);
+        if (args == null) {
+            PromptUtil.snackbarShowTxt(root, "没有收到参数！");
+            navController.popBackStack();
+            return;
+        }
+        toolbar.setNavigationOnClickListener(v -> {
             navController.popBackStack();
         });
+        int schoolId = args.getInt("schoolId");
 
-        final CalendarView calendarView= binding.calendarView;
+        final CalendarView calendarView = binding.calendarView;
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            Log.d(TAG, "选中日期: "+year+"\t"+month+"\t"+dayOfMonth);
-            String dateStr = String.format(Locale.CHINA, "%d-%d-%d", year, month,dayOfMonth);
-            presenter.searchActivities(repository,dateStr);
+            Log.d(TAG, "选中日期: " + year + "\t" + month + "\t" + dayOfMonth);
+            //选中的月份是从0开始的
+            String dateStr = String.format(Locale.CHINA, "%d-%d-%d", year, month + 1, dayOfMonth);
+            presenter.searchActivities(repository, dateStr, schoolId);
         });
-        adapter=new ActivitySimpleAdapter();
+        adapter = new ActivitySimpleAdapter();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
+
+        // 初始化数据为搜索当天的结果
+        String todayStr = DataUtil.dateToString(LocalDateTime.now(), false);
+        presenter.searchActivities(repository, todayStr, schoolId);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        root=null;
-        binding=null;
+        root = null;
+        binding = null;
     }
 
-    public void onSearchSuccess(List<MyStudentActivity> activities){
+    public void onSearchSuccess(List<MyStudentActivity> activities) {
         adapter.submitList(activities);
     }
 
-    public void onSearchFail(){
-        PromptUtil.snackbarShowTxt(root,"没有活动~ ");
-        //todo: 显示没有数据的图片
+    public void onSearchFail() {
+        PromptUtil.snackbarShowTxt(root, "没有活动~ ");
+        adapter.submitList(null);
     }
 }

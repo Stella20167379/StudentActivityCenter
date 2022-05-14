@@ -1,11 +1,18 @@
 package com.example.graduatedesign.association_module.data;
 
-public class Association {
+import java.io.Serializable;
+
+public class Association implements Serializable {
     private int id;
     private String associationName;
     private String establishTime;
-    private String cover;
+    private String coverImg;
     private String introduction;
+    private int collegeId;
+    /**
+     * 当前用户与当前社团的关系，1-普通用户，2-社团管理员
+     */
+    private int relState;
 
     public int getId() {
         return id;
@@ -31,12 +38,12 @@ public class Association {
         this.establishTime = establishTime;
     }
 
-    public String getCover() {
-        return cover;
+    public String getCoverImg() {
+        return coverImg;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover;
+    public void setCoverImg(String coverImg) {
+        this.coverImg = coverImg;
     }
 
     public String getIntroduction() {
@@ -55,5 +62,11 @@ public class Association {
         this.collegeId = collegeId;
     }
 
-    private int collegeId;
+    public int getRelState() {
+        return relState;
+    }
+
+    public void setRelState(int relState) {
+        this.relState = relState;
+    }
 }

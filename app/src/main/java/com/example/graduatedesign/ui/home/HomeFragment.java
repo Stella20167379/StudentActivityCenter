@@ -21,6 +21,7 @@ import com.example.graduatedesign.R;
 import com.example.graduatedesign.adapter.MyPagerAdapter;
 import com.example.graduatedesign.databinding.FragmentHomeBinding;
 import com.example.graduatedesign.personal_module.data.User;
+import com.example.graduatedesign.student_activity_module.ui.RelativeStates;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -37,7 +38,6 @@ public class HomeFragment extends Fragment {
     private View root;
     private HomeViewModel viewModel;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,49 +50,58 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final TextView schoolNameTitle= binding.schoolNameTitle;
-        final TextView nicknameTitle= binding.nickname;
-        final ImageButton filterBtn=binding.filterBtn;
-        final ImageButton searchBtn=binding.searchBtn;
-        final EditText keyInput= binding.editTextWithDel;
-        final TabLayout tabLayout = view.findViewById(R.id.tabs);
-        final ViewPager2 viewPager= binding.viewpager;
 
-        final MainActivityViewModel mainActivityViewModel=new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
-        viewModel=new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        final TextView schoolNameTitle = binding.schoolNameTitle;
+        final TextView nicknameTitle = binding.nickname;
+        final ImageButton filterBtn = binding.filterBtn;
+        final ImageButton searchBtn = binding.searchBtn;
+        final ImageButton addActivityBtn = binding.addActivityBtn;
+        final EditText keyInput = binding.editTextWithDel;
+        final TabLayout tabLayout = view.findViewById(R.id.tabs);
+        final ViewPager2 viewPager = binding.viewpager;
+        final NavController navController = Navigation.findNavController(view);
+        final MainActivityViewModel mainActivityViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
 
         /* 顶部用户信息展示 */
-        User user=mainActivityViewModel.getUserInfo().getValue();
+        User user = mainActivityViewModel.getUserInfo().getValue();
         nicknameTitle.setText(user.getNickname());
         schoolNameTitle.setText(user.getSchoolName());
         binding.setIsAnyAssociationAdmin(user.isAssociationAdmin());
 
         /* 初始化tab栏和viewpager */
-        List<String> clazzList=new ArrayList<>();
+        List<String> clazzList = new ArrayList<>();
         clazzList.add(HomeActivitiesFragment.class.getName());
         clazzList.add(HomeAssociationsFragment.class.getName());
-        final MyPagerAdapter adapter = new MyPagerAdapter(this,clazzList);
+        final MyPagerAdapter adapter = new MyPagerAdapter(this, clazzList);
         viewPager.setAdapter(adapter);
 
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> {
-                    if (position==0)
+                    if (position == 0)
                         tab.setText(R.string.txt_activity);
-                    else if (position==1)
+                    else if (position == 1)
                         tab.setText(R.string.txt_association);
                 }
         ).attach();
 
-        searchBtn.setOnClickListener(v->{
-            String key=keyInput.getText().toString();
+        searchBtn.setOnClickListener(v -> {
+            String key = keyInput.getText().toString();
             viewModel.setTabOpt(tabLayout.getSelectedTabPosition());
-            viewModel.getKey().setValue(key);
-//            adapter.notifyDataSetChanged();
+            viewModel.getSearchKey().setValue(key);
         });
 
-        filterBtn.setOnClickListener(v->{
-            final NavController navController= Navigation.findNavController(view);
-            navController.navigate(R.id.navigation_activity_search);
+        filterBtn.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("schoolId", user.getSchoolId());
+            navController.navigate(R.id.navigation_activity_search, bundle);
+        });
+
+        addActivityBtn.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", RelativeStates.FromHomeFragment);
+            bundle.putInt("userId", user.getId());
+            navController.navigate(R.id.activityAddFragment, bundle);
         });
 
     }
@@ -100,8 +109,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        root=null;
-        binding=null;
+        root = null;
+        binding = null;
     }
+
 }
 

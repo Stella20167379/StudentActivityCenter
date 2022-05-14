@@ -1,5 +1,7 @@
 package com.example.graduatedesign.ui.home;
 
+import android.util.ArrayMap;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelKt;
@@ -8,17 +10,12 @@ import androidx.paging.rxjava3.PagingRx;
 
 import com.example.graduatedesign.data.MyRepository;
 import com.example.graduatedesign.data.model.MyStudentActivity;
-import com.example.graduatedesign.student_activity_module.data.Bulletin;
-import com.example.graduatedesign.student_activity_module.data.Comment;
-
-import java.util.List;
+import com.example.graduatedesign.data.pagingsource.ActivityPagingSourceParams;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 import kotlinx.coroutines.CoroutineScope;
 
 @HiltViewModel
@@ -28,7 +25,7 @@ public class HomeViewModel extends ViewModel {
 
     /* 要传递给子fragment的搜索数据 */
     private int tabOpt = 0;
-    private MutableLiveData<String> key=new MutableLiveData<>();
+    private MutableLiveData<String> searchKey = new MutableLiveData<>();
 
     @Inject
     public HomeViewModel(MyRepository myRepository) {
@@ -39,8 +36,8 @@ public class HomeViewModel extends ViewModel {
         return tabOpt;
     }
 
-    public MutableLiveData<String> getKey() {
-        return key;
+    public MutableLiveData<String> getSearchKey() {
+        return searchKey;
     }
 
     public void setTabOpt(int tabOpt) {
@@ -55,7 +52,13 @@ public class HomeViewModel extends ViewModel {
      * @return
      */
     public Flowable<PagingData<MyStudentActivity>> getActivities(Integer size, Integer schoolId, String key) {
-        return PagingRx.cachedIn(myRepository.getActivities(size, schoolId, key), scope);
+        ArrayMap params = ActivityPagingSourceParams.getParams();
+        if (schoolId != null)
+            params.put("schoolId", schoolId);
+        if (key != null)
+            params.put("key", key);
+        else params.put("key", null);
+        return PagingRx.cachedIn(myRepository.getActivities(size), scope);
     }
 
 }

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.graduatedesign.R;
 import com.example.graduatedesign.data.model.Message;
-import com.example.graduatedesign.utils.DataUtil;
 import com.example.graduatedesign.utils.GlideUtils;
 
 public class MessageDetailHolder extends RecyclerView.ViewHolder {
@@ -57,6 +56,7 @@ public class MessageDetailHolder extends RecyclerView.ViewHolder {
             senderImg.setVisibility(View.GONE);
 
             imageView = MyImg;
+            greenMsg.setVisibility(View.VISIBLE);
             greenMsg.setText(message.getContent());
             greenMsg.setVisibility(View.VISIBLE);
         }
@@ -66,14 +66,15 @@ public class MessageDetailHolder extends RecyclerView.ViewHolder {
             MyImg.setVisibility(View.GONE);
 
             imageView = senderImg;
+            whiteMsg.setVisibility(View.VISIBLE);
             whiteMsg.setText(message.getContent());
             whiteMsg.setVisibility(View.VISIBLE);
         }
+        imageView.setVisibility(View.VISIBLE);
         Glide.with(itemView)
-                .load(DataUtil.getImgDownloadUri(DataUtil.getImgDownloadUri(message.getSenderPortrait())))
+                .load(GlideUtils.getImgDownloadUri(message.getSenderPortrait()))
                 .apply(GlideUtils.OPTIONS)
                 .into(imageView);
 
-        imageView.setVisibility(View.VISIBLE);
     }
 }

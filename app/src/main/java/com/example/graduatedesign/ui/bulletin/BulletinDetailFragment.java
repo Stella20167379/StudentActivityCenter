@@ -1,28 +1,22 @@
 package com.example.graduatedesign.ui.bulletin;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.example.graduatedesign.MainActivityViewModel;
-import com.example.graduatedesign.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.graduatedesign.data.MyRepository;
 import com.example.graduatedesign.databinding.FragmentWithOneRecyclerviewBinding;
-import com.example.graduatedesign.personal_module.data.User;
-import com.example.graduatedesign.personal_module.ui.comment.MyCommentPresenter;
-import com.example.graduatedesign.student_activity_module.data.Comment;
 import com.example.graduatedesign.ui.bulletin.adapter.SimpleBulletinAdapter;
 import com.example.graduatedesign.ui.bulletin.data.SimpleBulletin;
 import com.example.graduatedesign.utils.PromptUtil;
@@ -48,10 +42,13 @@ public class BulletinDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding= FragmentWithOneRecyclerviewBinding.inflate(inflater,container,false);
-        root=binding.getRoot();
-        progressBar= binding.progressBar;
-        presenter=new BulletinDetailPresenter(this);
+        binding = FragmentWithOneRecyclerviewBinding.inflate(inflater, container, false);
+        root = binding.getRoot();
+        progressBar = binding.progressBar;
+        recyclerView = binding.recyclerView;
+        presenter = new BulletinDetailPresenter(this);
+        /* 别忘了加上观察者，才能起作用啊！ */
+        getLifecycle().addObserver(presenter);
         return root;
     }
 
@@ -67,12 +64,17 @@ public class BulletinDetailFragment extends Fragment {
             return;
         }
 
+        final Toolbar toolbar = binding.toolbar;
+        //绑定返回功能
+        toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(root)
+                .popBackStack());
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter=new SimpleBulletinAdapter();
+        adapter = new SimpleBulletinAdapter();
         recyclerView.setAdapter(adapter);
         //type:1-活动公告,2-社团公告
-        presenter.initData(args.getInt("type"),repository,args.getInt("ownerId"));
+        presenter.initData(args.getInt("type"), repository, args.getInt("ownerId"));
     }
 
     @Override

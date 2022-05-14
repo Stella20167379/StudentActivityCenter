@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".student_activity_module.ui.detail.ActivityDetailHolderFragment">
+    tools:context=".student_activity_module.ui.detailholder.ActivityDetailHolderFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

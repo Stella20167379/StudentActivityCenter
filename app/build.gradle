@@ -16,8 +16,8 @@ android {
 
         packagingOptions{
             pickFirst "META-INF/gradle/incremental.annotation.processors"
-            exclude 'META-INF/INDEX.LIST'
-            exclude 'META-INF/io.netty.versions.properties'
+            exclude "META-INF/INDEX.LIST"
+            exclude "META-INF/io.netty.versions.properties"
         }
 
         compileOptions {
@@ -140,5 +140,9 @@ dependencies {
 
     //二维码
     implementation 'com.google.zxing:core:3.3.0'
+    implementation 'com.github.jenly1314:zxing-lite:2.1.1'
 
+    // 支付宝 SDK AAR 包所需的配置
+//    implementation 'com.alipay.sdk:alipaysdk-android:15.8.10'
+    api 'com.alipay.sdk:alipaysdk-android:+@aar'
 }

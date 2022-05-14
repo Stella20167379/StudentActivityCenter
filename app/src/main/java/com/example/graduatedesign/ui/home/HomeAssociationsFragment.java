@@ -1,6 +1,7 @@
 package com.example.graduatedesign.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -35,6 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class HomeAssociationsFragment extends Fragment {
+    private static final String TAG = "HomeAssociationsFragmen";
 
     @Inject
     MyRepository repository;
@@ -51,10 +53,12 @@ public class HomeAssociationsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentWithOneRecyclerviewBinding.inflate(inflater, container, false);
         root = binding.getRoot();
-        presenter=new HomeAssociationsPresenter(this);
+        presenter = new HomeAssociationsPresenter(this);
+        /* 别忘了加上观察者，才能起作用啊！ */
+        getLifecycle().addObserver(presenter);
 
         //不需要显示顶部工具栏
-        final Toolbar toolbar=binding.toolbar;
+        final Toolbar toolbar = binding.toolbar;
         toolbar.setVisibility(View.GONE);
 
         return root;
@@ -73,25 +77,45 @@ public class HomeAssociationsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new AssociationItemListener());
 
-        final MainActivityViewModel viewModel=new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
-        Integer schoolId=viewModel.getUserInfo().getValue().getSchoolId();
+        final MainActivityViewModel viewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
+        Integer schoolId = viewModel.getUserInfo().getValue().getSchoolId();
         //初始化数据
-        presenter.getShowAssociations(repository,schoolId,null);
+        presenter.getShowAssociations(repository, schoolId, null);
 
         /* 搜索监听 */
-        final HomeViewModel homeViewModel=new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
-        homeViewModel.getKey().observe(getViewLifecycleOwner(),key->{
-            if (homeViewModel.getTabOpt()!=1)
+        final HomeViewModel homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        homeViewModel.getSearchKey().observe(getViewLifecycleOwner(), key -> {
+            if (homeViewModel.getTabOpt() != 1)
                 return;
-            presenter.getShowAssociations(repository,schoolId,key);
+            Log.d(TAG, "onViewCreated: 进入社团搜索");
+            presenter.getShowAssociations(repository, schoolId, key);
         });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        root=null;
-        binding=null;
+        root = null;
+        binding = null;
+    }
+
+    /**
+     * 没有数据
+     * 或者查询失败
+     */
+    public void onSearchFail() {
+        progressBar.setVisibility(View.INVISIBLE);
+        Log.d(TAG, "onSearchFail: 查询失败");
+    }
+
+    /**
+     * 查询到数据的回调
+     *
+     * @param data 查询到的数据
+     */
+    public void onSearchSuccess(List<Association> data) {
+        progressBar.setVisibility(View.INVISIBLE);
+        adapter.submitList(data);
     }
 
     class AssociationItemListener extends RecyclerView.SimpleOnItemTouchListener {
@@ -102,13 +126,20 @@ public class HomeAssociationsFragment extends Fragment {
             public boolean onSingleTapUp(MotionEvent e) {
                 //获取当前触摸点下，recyclerview的子项
                 View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                int position= (int) recyclerView.getChildItemId(child);
-                Association association=adapter.getItem(position);
+                Log.d(TAG, "onSingleTapUp点击了： " + e.getX());
+                int position = (int) recyclerView.getChildAdapterPosition(child);
+
+                /* 放误点 */
+                if (position < 0)
+                    return false;
+
+                Log.d(TAG, "点击获取的位置: " + position);
+                Association association = adapter.getItem(position);
                 //携带数据跳转页面
-                Bundle bundle=new Bundle();
-                bundle.putInt("id",association.getId());
-                final NavController navController= Navigation.findNavController(recyclerView);
-                navController.navigate(R.id.associationDetailFragment,bundle);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", association.getId());
+                final NavController navController = Navigation.findNavController(recyclerView);
+                navController.navigate(R.id.associationDetailFragment, bundle);
                 return false;
             }
         };
@@ -120,22 +151,5 @@ public class HomeAssociationsFragment extends Fragment {
         public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
             return mGestureDetectorCompat.onTouchEvent(e);
         }
-    }
-
-    /**
-     * 查询到数据的回调
-     * @param data 查询到的数据
-     */
-    public void onSearchSuccess(List<Association> data){
-        progressBar.setVisibility(View.INVISIBLE);
-        adapter.submitList(data);
-    }
-
-    /**
-     * 没有数据
-     * 或者查询失败
-     */
-    public void onSearchFail(){
-        progressBar.setVisibility(View.INVISIBLE);
     }
 }

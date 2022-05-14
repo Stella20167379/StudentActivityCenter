@@ -32,7 +32,8 @@ public class ApplicationModule {
     @Provides
     public Retrofit provideRetrofit(OkHttpClient OkHttpClient, GsonConverterFactory gsonConverterFactory) {
         return new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:3165/")
+                .baseUrl("http://172.24.38.102:7365/")
+//                .baseUrl("http://10.0.2.2:7365/")
                 .addConverterFactory(gsonConverterFactory)
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create()) // 支持RxJava
                 .validateEagerly(true)//提前检查请求是否合法，开发时用
@@ -42,13 +43,19 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    public GsonConverterFactory provideGsonConverterFactory() {
+    public Gson provideGson() {
         GsonBuilder builder = new GsonBuilder();
         /*如果不设置serializeNulls,序列化(获取json对象)时默认忽略NULL*/
-        builder.serializeNulls();
+//        builder.serializeNulls();
         /*使打印的json字符串更美观，如果不设置，打印出来的字符串不分行*/
         builder.setPrettyPrinting();
         Gson gson = builder.create();
+        return gson;
+    }
+
+    @Singleton
+    @Provides
+    public GsonConverterFactory provideGsonConverterFactory(Gson gson) {
         return GsonConverterFactory.create(gson);
     }
 

@@ -57,4 +57,16 @@ public class Comment {
     public void setActivityName(String activityName) {
         this.activityName = activityName;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"userId\":" + userId +
+                ",\"activityId\":" + activityId +
+                ",\"activityName\":\"" + activityName + "\"" +
+                ",\"senderImg\":\"" + senderImg + "\"" +
+                ",\"content\":\"" + content + "\"" +
+                ",\"score\":" + score +
+                '}';
+    }
 }

@@ -25,9 +25,11 @@
     <string name="txt_month">月</string>
     <string name="txt_date">日</string>
     <string name="txt_time_symbol">:</string>
+    <string name="txt_pay_success">支付成功</string>
+    <string name="txt_pay_failed">支付失败</string>
 
     <!--  提示语句  -->
-    <string name="prompt_account">请输入账号昵称/邮箱</string>
+    <string name="prompt_account">请输入账号邮箱</string>
     <string name="prompt_nickname">请输入账号昵称</string>
     <string name="prompt_email">请输入邮箱</string>
     <string name="prompt_password">请输入密码</string>
@@ -41,7 +43,6 @@
     <string name="prompt_login_for_reset_pass">密码已重置，请重新登录</string>
     <string name="prompt_comment_input">请输入评论</string>
     <string name="prompt_title_input">请输入标题</string>
-
 
     <!--  标识语句/标题  -->
     <string name="title_first_page">这是第一页，加载中请稍候</string>
@@ -62,7 +63,6 @@
     <string name="title_activity_score">活动评分</string>
     <string name="title_submit_comment_score">我要评分</string>
 
-
     <!--  错误提示  -->
     <string name="error_pass">密码长度需大于5</string>
     <string name="error_confirm_pass">两次输入的密码不一致</string>
@@ -78,7 +78,7 @@
     <string name="link_to_register">没有账号？去注册</string>
 
     <!--  特殊的值  -->
-    <string name="special_min_date">01-01-2022</string>
+    <string name="special_min_date">01/01/2022</string>
     <string name="special_show_activity_datetime">2022-01-03 10:00</string>
     <string name="special_activity_state_1">未开始</string>
     <string name="special_activity_state_2">报名</string>
@@ -90,5 +90,6 @@
     <string name="special_activity_state_8">已签退</string>
     <string name="special_activity_state_9">已结束</string>
     <string name="special_default_comment_score">5.0</string>
+    <string name="special_charge_none">无需付费</string>
 
 </resources>

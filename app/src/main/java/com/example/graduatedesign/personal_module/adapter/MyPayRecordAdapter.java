@@ -33,7 +33,7 @@ public class MyPayRecordAdapter extends RecyclerView.Adapter<MyPayRecordHolder> 
     @NonNull
     @Override
     public MyPayRecordHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        return MyPayRecordHolder.create(parent);
     }
 
     @Override

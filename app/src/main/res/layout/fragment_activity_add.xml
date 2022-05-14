@@ -4,8 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
-        <variable name="isPay" type="Boolean" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isPay"
+            type="boolean" />
     </data>
 
     <ScrollView
@@ -235,7 +239,8 @@
                 android:background="@drawable/shape_rec_background_shadow"
                 android:padding="6dp"
                 android:gravity="start"
-                android:inputType="text"
+                android:inputType="textMultiLine"
+                tools:text="上岛咖啡接口都是分开的撒娇是打开房间了爱看书的房间阿里山烦烦烦啊空手道解放了"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="@+id/location"
                 app:layout_constraintTop_toTopOf="@+id/introduction_title" />
@@ -277,6 +282,7 @@
                 android:id="@+id/association_spinner"
                 android:layout_width="290dp"
                 android:layout_height="40dp"
+                android:gravity="center"
                 android:background="@drawable/shape_rec_background_shadow"
                 app:layout_constraintBottom_toBottomOf="@+id/association_title"
                 app:layout_constraintStart_toStartOf="@+id/location"
@@ -370,7 +376,7 @@
                 android:padding="6dp"
                 android:visibility="@{isPay?View.VISIBLE:View.GONE}"
                 android:gravity="start"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="@+id/location"
                 app:layout_constraintTop_toTopOf="@+id/fund_use_title" />

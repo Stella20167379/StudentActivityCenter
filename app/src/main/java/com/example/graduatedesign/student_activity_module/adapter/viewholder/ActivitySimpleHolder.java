@@ -1,5 +1,6 @@
 package com.example.graduatedesign.student_activity_module.adapter.viewholder;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.example.graduatedesign.utils.GlideUtils;
 import java.time.LocalDateTime;
 
 public class ActivitySimpleHolder extends RecyclerView.ViewHolder {
+    private static final String TAG = "ActivitySimpleHolder";
+
     private final View itemView;
     private final ImageView cover;
     private final TextView title;
@@ -43,24 +46,31 @@ public class ActivitySimpleHolder extends RecyclerView.ViewHolder {
         if (activity == null)
             return;
         Glide.with(itemView)
-                .load(DataUtil.getImgDownloadUri(activity.getCoverImg()))
+                .load(GlideUtils.getImgDownloadUri(activity.getCoverImg()))
                 .apply(GlideUtils.OPTIONS)
                 .into(cover);
         title.setText(activity.getTitle());
-        activityTime.setText(activity.getActivityStart()+"-"+activity.getActivityEnd());
 
-        String state="已结束";
-        if (activity.getParticipantState()!=null){
-            switch (activity.getParticipantState()){
-                case 1:state="未签到";
+        String timeStr = activity.getActivityStart().substring(0, 10) + "-" + activity.getActivityEnd().substring(0, 10);
+        activityTime.setText(timeStr);
+
+        String state = "已结束";
+        if (activity.getParticipantState() != null) {
+            Log.d(TAG, "查找参与状态中 ");
+            switch (activity.getParticipantState()) {
+                case 1:
+                    state = "未签到";
                     break;
-                case 2:state="已签到";
+                case 2:
+                    state = "已签到";
                     break;
-                case 3:state="已签退";
+                case 3:
+                    state = "已签退";
                     break;
             }
-        }else {
+        } else {
             String nowStr = DataUtil.dateToString(LocalDateTime.now(), true);
+            Log.d(TAG, "时间比对: " + nowStr);
             if (DataUtil.compareDatetimeStr(activity.getActivityStart(), nowStr))
                 state = "未开始";
             else if (DataUtil.compareDatetimeStr(activity.getActivityEnd(), nowStr))

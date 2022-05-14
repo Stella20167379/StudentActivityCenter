@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:src="@drawable/shape_gradient_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/shape_gradient_background" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/portrait"
@@ -87,7 +92,8 @@
             android:background="@color/purple_500"
             android:elevation="6dp"
             android:padding="@dimen/txt_margin_small"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/logout_btn"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/my_order_btn"
             app:layout_constraintTop_toTopOf="@+id/my_association_btn"
             app:srcCompat="@drawable/ic_my_comment_24" />
@@ -101,6 +107,7 @@
             android:elevation="6dp"
             android:padding="@dimen/txt_margin_small"
             app:layout_constraintEnd_toStartOf="@+id/my_order_btn"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             app:srcCompat="@drawable/ic_association_car_24" />
@@ -122,6 +129,7 @@
             android:elevation="6dp"
             android:padding="@dimen/txt_margin_small"
             app:layout_constraintEnd_toStartOf="@+id/my_comment_btn"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/my_association_btn"
             app:layout_constraintTop_toTopOf="@+id/my_association_btn"
             app:srcCompat="@drawable/ic_my_order_24" />
@@ -129,12 +137,36 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/txt_margin_small"
             android:text="我的支付记录"
             android:textColor="@color/black"
-            android:layout_marginTop="@dimen/txt_margin_small"
             app:layout_constraintEnd_toEndOf="@+id/my_order_btn"
             app:layout_constraintStart_toStartOf="@+id/my_order_btn"
             app:layout_constraintTop_toBottomOf="@+id/my_order_btn" />
+
+        <ImageButton
+            android:id="@+id/logout_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_500"
+            android:elevation="6dp"
+
+            android:padding="@dimen/txt_margin_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/my_comment_btn"
+            app:layout_constraintTop_toTopOf="@+id/my_association_btn"
+            app:srcCompat="@drawable/ic_close_white_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注销登录"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/logout_btn"
+            app:layout_constraintStart_toStartOf="@+id/logout_btn"
+            app:layout_constraintTop_toTopOf="@+id/my_association_title" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -157,8 +189,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            app:layout_constraintTop_toBottomOf="@id/recyclerView"
-            />
+            app:layout_constraintTop_toBottomOf="@id/recyclerView" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+</ScrollView>

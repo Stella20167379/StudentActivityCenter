@@ -1,6 +1,7 @@
 package com.example.graduatedesign.ui.login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +10,7 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import com.example.graduatedesign.MainActivityViewModel;
 import com.example.graduatedesign.R;
 import com.example.graduatedesign.data.model.Result;
 import com.example.graduatedesign.databinding.FragmentLoginBinding;
+import com.example.graduatedesign.net.netty.PushService;
 import com.example.graduatedesign.personal_module.data.User;
 import com.example.graduatedesign.utils.CountDownTimerUtil;
 import com.example.graduatedesign.utils.PromptUtil;
@@ -186,13 +189,20 @@ public class LoginFragment extends Fragment implements TabLayout.OnTabSelectedLi
         credentialEditText.addTextChangedListener(afterTextChangedListener);
         verifyCodeEditText.addTextChangedListener(afterTextChangedListener);
 
-
         /* 登录按钮点击监听，点击按钮调用ViewModel方法，实现 视图操作-> 数据更新 */
-
         loginButton.setOnClickListener(v -> {
             loadingProgressBar.setVisibility(View.VISIBLE);
-            loginViewModel.login(principalEditText.getText().toString(),
-                    credentialEditText.getText().toString());
+            int type = loginViewModel.getLoginType();
+            String principal = principalEditText.getText().toString();
+            Log.d(TAG, "principal: " + principal);
+            String credential;
+            if (type == 1) {
+                credential = credentialEditText.getText().toString();
+            } else {
+                credential = verifyCodeEditText.getText().toString();
+            }
+            Log.d(TAG, "credential: " + credential);
+            loginViewModel.login(principal, credential);
         });
 
         /* 获取验证码按钮点击事件,结果影响数据，视图操作 -> 数据更新 */
@@ -214,10 +224,8 @@ public class LoginFragment extends Fragment implements TabLayout.OnTabSelectedLi
             loginViewModel.getLoginVerifyCode(principalEditText.getText().toString());
         });
 
-
         /* ----------------------------- END ------------------------------- */
     }
-
 
     /**
      * 登录成功的回调操作
@@ -248,16 +256,22 @@ public class LoginFragment extends Fragment implements TabLayout.OnTabSelectedLi
         editor.putInt("id", user.getId());
         editor.putString("schoolName", user.getSchoolName());
         editor.putString("nickname", user.getNickname());
-        editor.putString("email", user.getEmail());
         editor.putString("portrait", user.getPortrait());
         editor.putInt("credentialInfoId", user.getCredentialInfoId());
         editor.putInt("schoolId", user.getSchoolId());
-        editor.putString("realName", user.getRealName());
-        editor.putBoolean("sex", user.isSex());
-        editor.putString("credentialNum", user.getCredentialNum());
-        editor.putString("role", user.getRole());
-        editor.putString("majorClass", user.getMajorClass());
         editor.putBoolean("isAssociationAdmin", user.isAssociationAdmin());
+
+        /* 启动socket服务 */
+        Log.d(TAG, "启动socket服务");
+        requireActivity().startService(new Intent(requireActivity().getApplicationContext(), PushService.class));
+
+
+//        editor.putString("realName", user.getRealName());
+//        editor.putBoolean("sex", user.isSex());
+//        editor.putString("credentialNum", user.getCredentialNum());
+//        editor.putString("role", user.getRole());
+//        editor.putString("majorClass", user.getMajorClass());
+//        editor.putString("email", user.getEmail());
 
         editor.putString("tokenName", tokenName);
         editor.putString("token", token);
@@ -303,7 +317,7 @@ public class LoginFragment extends Fragment implements TabLayout.OnTabSelectedLi
      * @param loginType 根据tab视图选中的标签位置得到的登录类型
      */
     private void switchLoginView(int loginType) {
-        loginViewModel.getLoginType().setValue(loginType);
+        loginViewModel.setLoginType(loginType);
         //密码登录
         if (loginType == 1) {
             getVerifyCodeBtn.setVisibility(View.GONE);

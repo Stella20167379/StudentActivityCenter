@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.graduatedesign.R;
 import com.example.graduatedesign.student_activity_module.data.Comment;
-import com.example.graduatedesign.utils.DataUtil;
 import com.example.graduatedesign.utils.GlideUtils;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -42,7 +41,7 @@ public class ActivityCommentViewHolder extends RecyclerView.ViewHolder {
         if (comment == null)
             return;
         Glide.with(itemView)
-                .load(DataUtil.getImgDownloadUri(comment.getSenderImg()))
+                .load(GlideUtils.getImgDownloadUri(comment.getSenderImg()))
                 .apply(GlideUtils.OPTIONS)
                 .into(imageView);
         commentView.setText(comment.getContent());

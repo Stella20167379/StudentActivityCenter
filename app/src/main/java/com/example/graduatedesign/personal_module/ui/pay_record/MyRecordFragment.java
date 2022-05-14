@@ -13,12 +13,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.graduatedesign.MainActivityViewModel;
-import com.example.graduatedesign.association_module.data.Association;
 import com.example.graduatedesign.data.MyRepository;
 import com.example.graduatedesign.databinding.FragmentWithOneRecyclerviewBinding;
 import com.example.graduatedesign.personal_module.adapter.MyPayRecordAdapter;
@@ -48,11 +46,15 @@ public class MyRecordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding= FragmentWithOneRecyclerviewBinding.inflate(inflater,container,false);
-        root=binding.getRoot();
-        presenter=new MyPayRecordPresenter(this);
+        binding = FragmentWithOneRecyclerviewBinding.inflate(inflater, container, false);
+        root = binding.getRoot();
 
-        progressBar= binding.progressBar;
+        presenter = new MyPayRecordPresenter(this);
+        /* 别忘了加上观察者，才能起作用啊！ */
+        getLifecycle().addObserver(presenter);
+        progressBar = binding.progressBar;
+
+        recyclerView = binding.recyclerView;
         return root;
     }
 
@@ -61,7 +63,6 @@ public class MyRecordFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         final TextView title= binding.toolbarTitle;
         final Toolbar toolbar = binding.toolbar;
-        recyclerView= binding.recyclerView;
         adapter=new MyPayRecordAdapter();
 
         //绑定返回功能

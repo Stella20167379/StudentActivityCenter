@@ -43,8 +43,8 @@ public class CollegeSpinnerAdapter extends BaseAdapter {
         CollegeSpinnerViewHolder holder;
         //实现复用
         if (convertView==null){
-            holder=new CollegeSpinnerViewHolder();
-            convertView=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_college_spinner,parent,false);
+            holder = new CollegeSpinnerViewHolder();
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_txt_spinner, parent, false);
             convertView.setTag(holder);
         }else
             holder= (CollegeSpinnerViewHolder) convertView.getTag();

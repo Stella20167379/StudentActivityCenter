@@ -11,14 +11,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.graduatedesign.data.dao.CollegeDao;
 import com.example.graduatedesign.data.model.College;
-import com.example.graduatedesign.utils.AssetsUtil;
 
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @Database(entities = {College.class}, version = 1, exportSchema = false)
 //@TypeConverters({DateTypeConverter.class})
@@ -53,15 +48,15 @@ public abstract class MyDatabase extends RoomDatabase {
                                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
                                     super.onCreate(db);
                                     Log.d(TAG, "onCreate: 创建回调中");
-                                    Completable.create(emitter -> {
-                                        List<College> collegeList = AssetsUtil.getColleges(context);
-                                        if (collegeList != null){
-                                            Log.d(TAG, "onCreate: 读取到数据，另开线程异步插入数据库");
-                                            INSTANCE.getCollegeDao().insertAll(collegeList);
-                                        }
-                                    })
-                                    .subscribeOn(Schedulers.computation())
-                                    .subscribe();
+//                                    Completable.create(emitter -> {
+//                                        List<College> collegeList = AssetsUtil.getColleges(context);
+//                                        if (collegeList != null){
+//                                            Log.d(TAG, "onCreate: 读取到数据，另开线程异步插入数据库");
+//                                            INSTANCE.getCollegeDao().insertAll(collegeList);
+//                                        }
+//                                    })
+//                                    .subscribeOn(Schedulers.computation())
+//                                    .subscribe();
                                 }
                             })
                             .build();

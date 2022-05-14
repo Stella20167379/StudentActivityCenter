@@ -2,6 +2,7 @@ package com.example.graduatedesign.ui.login;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.ArrayMap;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +25,6 @@ import com.example.graduatedesign.presenter.ForgetPassFirstPresenter;
 import com.example.graduatedesign.utils.CountDownTimerUtil;
 import com.example.graduatedesign.utils.PromptUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -50,6 +50,8 @@ public class ForgetPassFirstFragment extends Fragment {
         binding = FragmentForgetPassFirstBinding.inflate(inflater, container, false);
         root = binding.getRoot();
         presenter = new ForgetPassFirstPresenter(this);
+        /* 别忘了加上观察者，才能起作用啊！ */
+        getLifecycle().addObserver(presenter);
 
         getVerifyCodeBtn = binding.btnGetVerifyCode;
 
@@ -91,7 +93,7 @@ public class ForgetPassFirstFragment extends Fragment {
             else if (verifyCode.trim().isEmpty() || TextUtils.isEmpty(verifyCode))
                 verifyCodeView.setError("验证码不能为空");
             else {
-                Map<String,String> resetData=new HashMap();
+                Map<String, String> resetData = new ArrayMap<>();
                 resetData.put("email",email);
                 resetData.put("verifyCode",verifyCode);
                 resetData.put("newPass",newPass);
@@ -115,7 +117,6 @@ public class ForgetPassFirstFragment extends Fragment {
 
     public void onGetVerifyCodeFail(String msg){
         PromptUtil.snackbarShowTxt(root,msg);
-
         timer.cancelTimerCount();
     }
 

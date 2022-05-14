@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 public class QRCodeUtil {
+    public static final String strSeparator = "_";
 
     public static final Map<DecodeHintType, Object> HINTS = new EnumMap<>(DecodeHintType.class);
     static {
@@ -136,7 +137,7 @@ public class QRCodeUtil {
         Result result;
         try {
             result = reader.decode(bitmap1, hints);
-            resultCallBack.callBack(result.getText().toString());
+            resultCallBack.callBack(result.getText());
         } catch (NotFoundException e) {
             e.printStackTrace();
         } catch (ChecksumException e) {
@@ -152,7 +153,6 @@ public class QRCodeUtil {
     public interface ResultCallBack {
         void callBack(String result);
     }
-
 
     /**
      * 同步解析本地图片二维码。该方法是耗时操作，请在子线程中调用。

@@ -1,7 +1,5 @@
 package com.example.graduatedesign.student_activity_module.ui.add;
 
-import android.net.Uri;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
@@ -10,8 +8,7 @@ import com.example.graduatedesign.data.MyRepository;
 import com.example.graduatedesign.data.model.MyStudentActivity;
 
 import java.io.File;
-import java.util.Map;
-
+@Deprecated
 public class ActivityAddPresenter implements DefaultLifecycleObserver {
     private ActivityAddFragment view;
 
@@ -22,10 +19,16 @@ public class ActivityAddPresenter implements DefaultLifecycleObserver {
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
         DefaultLifecycleObserver.super.onDestroy(owner);
-        view=null;
+        view = null;
     }
 
-    public void addActivity(MyRepository repository, MyStudentActivity activity, File coverImg){
+    public void addActivity(MyRepository repository, MyStudentActivity activity, File file) {
+        if (file == null && activity == null) {
+            return;
+        }
+
 
     }
+
+
 }

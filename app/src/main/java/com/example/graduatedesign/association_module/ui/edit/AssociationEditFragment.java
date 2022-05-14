@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,22 +19,28 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
-import com.example.graduatedesign.R;
 import com.example.graduatedesign.association_module.data.Association;
 import com.example.graduatedesign.association_module.ui.AssociationViewModel;
+import com.example.graduatedesign.custom.OneInputDialog;
 import com.example.graduatedesign.databinding.FragmentAssociationEditBinding;
-import com.example.graduatedesign.utils.DataUtil;
+import com.example.graduatedesign.utils.FileUtil;
 import com.example.graduatedesign.utils.GlideUtils;
 import com.example.graduatedesign.utils.PromptUtil;
+import com.example.graduatedesign.utils.RxLifecycleUtils;
 
-import java.util.HashMap;
+import java.io.File;
 import java.util.Map;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class AssociationEditFragment extends Fragment {
@@ -52,6 +59,8 @@ public class AssociationEditFragment extends Fragment {
     private ActivityResultLauncher<String> getContentLauncher;
     /* 用户选中的图片uri */
     private Uri portraitUri = null;
+    /* 提交修改时，保存修改后信息的对象 */
+    private Map<String, String> editInfo = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -113,11 +122,15 @@ public class AssociationEditFragment extends Fragment {
         });
 
         /* 保存信息操作结果提示 */
-        associationViewModel.getSaveInfoPrompt().observe(getViewLifecycleOwner(), prompt -> PromptUtil.snackbarShowTxt(view, prompt));
+        associationViewModel.getSaveInfoPrompt().observe(getViewLifecycleOwner(), prompt -> {
+            PromptUtil.snackbarShowTxt(view, prompt);
+            //操作完成，无论成功与否恢复可点击
+            editSubmitBtn.setEnabled(true);
+        });
 
         //初始化设置控件显示内容
         Glide.with(this)
-                .load(DataUtil.getImgDownloadUri(previousAssociation.getCover()))
+                .load(GlideUtils.getImgDownloadUri(previousAssociation.getCoverImg()))
                 .apply(GlideUtils.OPTIONS)
                 .into(portraitView);
         associationName.setText(previousAssociation.getAssociationName());
@@ -125,12 +138,7 @@ public class AssociationEditFragment extends Fragment {
         introduction.setText(previousAssociation.getIntroduction());
 
         editAssociationName.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("title", "修改社团名称");
-            bundle.putString("default", previousAssociation.getAssociationName());
-            bundle.putString("dataKey", "associationName");
-            bundle.putString("requestKey", requestKey);
-            Navigation.findNavController(view).navigate(R.id.oneInputFragment, bundle);
+            openOneInputDialog(associationName, "输入社团名称", previousAssociation.getAssociationName());
         });
 
         editPortrait.setOnClickListener(v -> {
@@ -138,21 +146,43 @@ public class AssociationEditFragment extends Fragment {
         });
 
         editSubmitBtn.setOnClickListener(v -> {
-            if (portraitUri != null)
-                associationViewModel.uploadImg(portraitUri);
-
-            Map<String, Object> editInfo = new HashMap<>();
+            //避免重复点击
+            editSubmitBtn.setEnabled(false);
             String currentName = associationName.getText().toString();
             String currentIntroduction = introduction.getText().toString();
 
+            editInfo = new ArrayMap<>();
+            /* 带上社团id */
+            editInfo.put("id", String.valueOf(previousAssociation.getId()));
+
+            /* 收集文字数据 */
             if (!currentName.equals(previousAssociation.getAssociationName())) {
                 editInfo.put("associationName", currentName);
             } else if (!currentIntroduction.equals(previousAssociation.getIntroduction())) {
                 editInfo.put("introduction", currentIntroduction);
-            } else {
-                editInfo = null;
             }
-            associationViewModel.saveEditInfo(editInfo);
+
+            /* 收集图片数据 */
+            Single.create(emitter -> {
+                if (this.portraitUri != null) {
+                    File file = FileUtil.from(getContext(), this.portraitUri);
+                    emitter.onSuccess(file);
+                }
+                emitter.onSuccess("null");
+            }).subscribeOn(Schedulers.io())
+                    //好像是必须在主线程绑定生命周期来着
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .to(RxLifecycleUtils.bindLifecycle(this))
+                    .subscribe(file -> {
+                                Object thisFile = file;
+                                if (thisFile instanceof String)
+                                    thisFile = null;
+                                associationViewModel.saveEditInfo(this, editInfo, (File) thisFile);
+                            }, throwable -> {
+                                editSubmitBtn.setEnabled(true);
+                                PromptUtil.snackbarShowTxt(root, "保存失败:" + throwable.getMessage());
+                            }
+                    );
         });
 
     }
@@ -162,6 +192,31 @@ public class AssociationEditFragment extends Fragment {
         super.onDestroyView();
         root = null;
         binding = null;
+    }
+
+    /**
+     * 打开仅包含一个输入框的弹窗，点击确定按钮关闭弹窗，并将输入传进view
+     *
+     * @param view         文本视图控件
+     * @param title        弹窗标题
+     * @param defaultInput 弹窗默认显示的内容
+     */
+    private void openOneInputDialog(TextView view, String title, String defaultInput) {
+        OneInputDialog dialog = new OneInputDialog();
+        dialog.setTitle(title);
+        dialog.setDefaultInput(defaultInput);
+        dialog.setListener(new OneInputDialog.OneInputDialogListener() {
+            @Override
+            public void onDialogPositiveClick(DialogFragment dialog, String result) {
+                view.setText(result);
+            }
+
+            @Override
+            public void onDialogNegativeClick(DialogFragment dialog) {
+                dialog.getDialog().cancel();
+            }
+        });
+        dialog.show(getParentFragmentManager(), "PersonalDetailFragment_input");
     }
 
     /**

@@ -5,6 +5,7 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.example.graduatedesign.data.MyRepository;
+import com.example.graduatedesign.utils.RxLifecycleUtils;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -12,7 +13,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class MyPayRecordPresenter implements DefaultLifecycleObserver {
     private MyRecordFragment view;
 
-    public MyPayRecordPresenter(MyRecordFragment view){
+    public MyPayRecordPresenter(MyRecordFragment view) {
         this.view = view;
     }
 
@@ -20,15 +21,25 @@ public class MyPayRecordPresenter implements DefaultLifecycleObserver {
     public void onDestroy(@NonNull LifecycleOwner owner) {
         DefaultLifecycleObserver.super.onDestroy(owner);
         //删除对框架类fragment的引用,系统才能成功回收资源
-        view=null;
+        view = null;
     }
 
-    public void initData(MyRepository repository,int userId){
-        repository.getMyPayRecords(userId)
+    public void initData(MyRepository repository, int userId) {
+        repository.getPayRecordsForUser(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(payRecords -> view.onInitSuccess(payRecords),
-                        throwable -> throwable.printStackTrace());
+                .to(RxLifecycleUtils.bindLifecycle(view))
+                .subscribe(payRecords -> {
+                            if (payRecords == null || payRecords.size() < 1)
+                                view.onInitFail();
+                            else view.onInitSuccess(payRecords);
+                        },
+                        throwable -> {
+                            throwable.printStackTrace();
+                            view.onInitFail();
+                        });
     }
 
 }
+
+

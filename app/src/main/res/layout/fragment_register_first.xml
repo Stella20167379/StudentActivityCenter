@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,7 +18,7 @@
         android:elevation="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_back_black_24"/>
+        app:navigationIcon="@drawable/ic_arrow_back_black_24" />
 
     <TextView
         android:id="@+id/title_register_first"
@@ -38,11 +37,12 @@
         android:id="@+id/studentNo"
         android:layout_width="0dp"
         android:layout_height="52dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="40dp"
         android:hint="@string/prompt_student_no"
         android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spinner"
+        app:layout_constraintStart_toEndOf="@+id/student_no_title"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
 
@@ -51,12 +51,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/selector_btn"
         android:text="@string/txt_continue"
         android:textColor="@color/white"
-        android:background="@drawable/selector_btn"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="@+id/studentNo"
-        app:layout_constraintStart_toStartOf="@+id/studentNo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/studentNo" />
 
     <Spinner
@@ -64,10 +64,12 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
+        android:layout_marginEnd="@dimen/txt_margin_medium"
         android:layout_marginTop="50dp"
-        android:contentDescription="@string/txt_school"
         android:background="@drawable/shape_rec_background_shadow"
-        app:layout_constraintEnd_toEndOf="@+id/studentNo"
+        android:contentDescription="@string/txt_school"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/title_register_first" />
 
@@ -79,7 +81,18 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/spinner"
-        app:layout_constraintStart_toStartOf="@+id/studentNo"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
         app:layout_constraintTop_toTopOf="@+id/spinner" />
+
+    <TextView
+        android:id="@+id/student_no_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="学号"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/studentNo"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/studentNo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

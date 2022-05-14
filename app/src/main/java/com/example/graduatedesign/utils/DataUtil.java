@@ -5,31 +5,37 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class DataUtil {
     /**
      * 年月格式符
      */
-    public static String YMPattern="yyyy-MM";
+    public static String YMPattern = "yyyy-MM";
     /**
      * 年月日格式符
      */
-    public static String YMDPattern="yyyy-MM-dd";
+    public static String YMDPattern = "yyyy-MM-dd";
     /**
      * 年月日时分格式符
+     * 见DateTimeFormatter最上方说明
      */
-    public static String YMDHMPattern="yyyy-MM-dd HH:mm";
+    public static String YMDHMPattern = "yyyy-MM-dd HH:mm:ss";
 
     //具有转换功能的对象
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(YMDPattern, Locale.CHINA);
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(YMDHMPattern,Locale.CHINA);
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(YMDHMPattern, Locale.CHINA);
 
     /**
      * 字符串转时间对象
-     * @param value 待转换的字符串
+     *
+     * @param value         待转换的字符串
      * @param withTimeOrNot 是否带上时分
      * @return
      */
@@ -39,37 +45,49 @@ public class DataUtil {
         LocalDateTime time;
         if (withTimeOrNot)
             time = LocalDateTime.parse(value, dateTimeFormatter);
-        else time=LocalDateTime.parse(value,dateFormatter);
+        else time = LocalDateTime.parse(value, dateFormatter);
         return time;
     }
 
     /**
      * 时间对象转字符串
-     * @param value 待转换的时间对象
+     * 由于后端传来的时间带有秒，故转换时间时也加入秒
+     *
+     * @param value         待转换的时间对象
      * @param withTimeOrNot 是否带有时分
      * @return
      */
-    public static String dateToString(LocalDateTime value,boolean withTimeOrNot) {
+    public static String dateToString(LocalDateTime value, boolean withTimeOrNot) {
         if (value == null)
             return null;
 
         String time;
         if (withTimeOrNot)
             time = dateTimeFormatter.format(value);
-        else time=dateFormatter.format(value);
+        else time = dateFormatter.format(value);
 
         return time;
+    }
+
+    /**
+     * @param old 包含年月日，时分秒的时间字符串
+     * @deprecated 去除时间字符串格中的时分秒
+     */
+    public static String formatDateString(String old) {
+        //beginIndex – 起始索引（包括）、endIndex – 结束索引（不包括）
+        return old.substring(0, 10);
     }
 
 
     /**
      * 时间参数一大于时间参数二时返回true
+     *
      * @param var01 时间参数一
      * @param var02 时间参数二
      * @return
      */
-    public static boolean compareDatetimeStr(String var01,String var02){
-        if(Long.valueOf(var01.replaceAll("[-\\s:]",""))>Long.valueOf(var02.replaceAll("[-\\s:]", ""))){
+    public static boolean compareDatetimeStr(String var01, String var02) {
+        if (Long.valueOf(var01.replaceAll("[-\\s:]", "")) > Long.valueOf(var02.replaceAll("[-\\s:]", ""))) {
             //满足条件时表示：开始时间大于结束时间
             return true;
         }
@@ -79,30 +97,34 @@ public class DataUtil {
 
     /**
      * 后端返回的int数据被Gson转换器转换为了Double类型，一直没解决这个问题
+     *
      * @param data 网络请求响应负载的数据
-     * @param key 要获取的整形字段
+     * @param key  要获取的整形字段
      * @return
      */
-    public static int getIntFromGsonMap(Map<String,Object> data,String key){
+    public static int getIntFromGsonMap(Map<String, Object> data, String key) {
         Double value = (Double) data.get(key);
         return value.intValue();
     }
 
     /**
      * 返回拼接后的可以访问的图片路径
+     *
      * @param imgPath 图片的相对路径
      * @return
      */
-    public static String getImgDownloadUri(String imgPath){
-        return "http://10.0.2.2:3165/img/"+imgPath;
+    @Deprecated
+    public static String getImgDownloadUri(String imgPath) {
+        return "http://10.0.2.2:7365/files/down/" + imgPath;
     }
 
     /**
      * 将map对象转换为实体类对象
-     *  @param clazz 目标实体类的class
+     *
+     * @param clazz 目标实体类的class
      */
-    public static <T> T mapToBean(final Map<String,Object> map,final Class<?> clazz) {
-        if (map==null)
+    public static <T> T mapToBean(final Map<String, Object> map, final Class<?> clazz) {
+        if (map == null)
             return null;
         T bean = null;
         try {
@@ -127,7 +149,7 @@ public class DataUtil {
             //设置对象的访问权限
             field.setAccessible(true);
             //根据属性名称去map获取value
-            if(map.containsKey(field.getName())) {
+            if (map.containsKey(field.getName())) {
                 //给对象赋值
                 try {
                     field.set(bean, map.get(field.getName()));
@@ -141,6 +163,7 @@ public class DataUtil {
 
     /**
      * JavaBean转Map
+     *
      * @param obj
      * @return
      */
@@ -157,7 +180,7 @@ public class DataUtil {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-            if (value == null){
+            if (value == null) {
                 value = "";
             }
             map.put(fieldName, value);
@@ -165,5 +188,24 @@ public class DataUtil {
         return map;
     }
 
+    /**
+     * 生成包含文件的请求体，参数可为空
+     *
+     * @param file   包含文件的请求体部分
+     * @param params 请求包含的参数,key、value都必须是字符类型
+     */
+    public static RequestBody buildRequestBody(final RequestBody file, final Map<String, String> params) {
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        if (file != null)
+            builder.addFormDataPart("file", "img", file);
+        if (params != null) {
+            Iterator keyIt = params.keySet().iterator();
+            while (keyIt.hasNext()) {
+                String key = (String) keyIt.next();
+                builder.addFormDataPart(key, params.get(key));
+            }
+        }
+        return builder.build();
+    }
 
 }

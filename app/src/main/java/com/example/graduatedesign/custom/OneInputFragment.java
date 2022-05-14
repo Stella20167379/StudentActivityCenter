@@ -17,7 +17,12 @@ import androidx.navigation.Navigation;
 
 import com.example.graduatedesign.databinding.FragmentWithOneInputBinding;
 
+/**
+ * @deprecated 请使用OneInputDialog，创建对象后show即可
+ */
+@Deprecated
 public class OneInputFragment extends Fragment {
+    private static final String TAG = "OneInputFragment";
     private FragmentWithOneInputBinding binding;
     private View root;
 

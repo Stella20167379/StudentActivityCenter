@@ -2,6 +2,7 @@ package com.example.graduatedesign.ui.login;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,14 @@ import androidx.navigation.Navigation;
 import com.example.graduatedesign.R;
 import com.example.graduatedesign.adapter.CollegeSpinnerAdapter;
 import com.example.graduatedesign.data.LoginRepository;
-import com.example.graduatedesign.data.MyDatabase;
 import com.example.graduatedesign.data.model.College;
 import com.example.graduatedesign.databinding.FragmentRegisterFirstBinding;
 import com.example.graduatedesign.presenter.RegisterFirstContract;
 import com.example.graduatedesign.presenter.RegisterFirstPresenter;
+import com.example.graduatedesign.utils.AssetsUtil;
+import com.example.graduatedesign.utils.GsonConvertTypes;
 import com.example.graduatedesign.utils.RxLifecycleUtils;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -58,6 +61,8 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
         binding = FragmentRegisterFirstBinding.inflate(inflater, container, false);
         root = binding.getRoot();
         presenter = new RegisterFirstPresenter(this);
+        /* 别忘了加上观察者，才能起作用啊！ */
+        getLifecycle().addObserver(presenter);
 
         return root;
     }
@@ -109,9 +114,14 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
      * 初始化下拉框信息
      */
     public void initCollegeInfo() {
+
         Single.create((SingleOnSubscribe<List<College>>) emitter -> {
-            MyDatabase myDatabase = MyDatabase.getDatabase(getContext());
-            List<College> collegeList = myDatabase.getCollegeDao().getAllCollege();
+            String file = "college.json";
+            String listJson = AssetsUtil.getJsonFromAssets(getContext(), file);
+            Log.d(TAG, "获取的json内容：" + listJson);
+
+            Gson gson = new Gson();
+            List<College> collegeList = gson.fromJson(listJson, GsonConvertTypes.gsonTypeOfCollegeList);
             emitter.onSuccess(collegeList);
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -122,7 +132,10 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
                             spinner.setAdapter(adapter);
                             spinner.setOnItemSelectedListener(this);
                         },
-                        throwable -> throwable.printStackTrace()
+                        throwable -> {
+                            Log.d(TAG, "发生错误");
+                            throwable.printStackTrace();
+                        }
                 );
     }
 
@@ -130,12 +143,12 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
      * 用户输入学号合法时的回调
      */
     @Override
-    public void onPassStudentNo() {
+    public void onPassStudentNo(int credentialInfoId) {
         NavController navController = Navigation.findNavController(root);
 
         Bundle bundle = new Bundle();
         bundle.putInt("collegeId", selectedCollegeId);
-        bundle.putString("studentNo", studentNo);
+        bundle.putInt("credentialInfoId", credentialInfoId);
 
         navController.navigate(R.id.action_registerFirstFragment_to_registerSecondFragment, bundle);
     }
